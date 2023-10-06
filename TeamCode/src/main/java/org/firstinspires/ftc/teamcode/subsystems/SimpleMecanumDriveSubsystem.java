@@ -4,10 +4,13 @@ import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.stealthrobotics.library.AutoToTeleStorage;
 
 /**
@@ -18,7 +21,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
     final DcMotor leftRearDrive;
     final DcMotor rightFrontDrive;
     final DcMotor rightRearDrive;
-    final BNO055IMU imu;
+    final IMU imu;
     boolean fieldcentric = true;
     double headingOffset = 0.0;
 
@@ -29,20 +32,23 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
 
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftRearDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightRearDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightRearDrive.setDirection(DcMotor.Direction.FORWARD);
         leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Retrieve the IMU from the hardware map
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        // Technically this is the default, however specifying it is clearer
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        // Without this, data retrieving from the IMU throws an exception
+        imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(
+                new RevHubOrientationOnRobot(
+                    RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+                    RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
+                )
+        );
+
         imu.initialize(parameters);
 
     }
@@ -61,7 +67,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         double rotation = rightStickX;
         if (fieldcentric) {
             // Read inverse IMU heading, as the IMU heading is CW positive
-            double botHeading = getHeading();
+            double botHeading = -getHeading();
             double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
             double rotY = x * Math.sin(botHeading) + y * Math.cos(botHeading);
             x = rotX;
@@ -84,19 +90,20 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
 
     // The actual heading from the IMU, only adjusted so that positive is clockwise
     public double getRawHeading() {
-        return -imu.getAngularOrientation().firstAngle;
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
 
     // The heading we'll use to drive the bot, adjusted for an offset which we can set any time
     // we want to correct for gyro drift as we drive.
     public double getHeading() {
-        return getRawHeading() - headingOffset + AutoToTeleStorage.finalAutoHeading;
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) - headingOffset;
     }
 
     // Adjust our heading so the front of the bot is forward, no matter how we've drifted over time.
     public void resetHeading() {
         headingOffset = getRawHeading();
-        AutoToTeleStorage.finalAutoHeading = 0;    }
+        AutoToTeleStorage.finalAutoHeading = 0;
+    }
     public void drive(double y, double x, double rotation) {
         // Denominator is the largest motor power (absolute value) or 1
         // This ensures all the powers maintain the same ratio, but only when
