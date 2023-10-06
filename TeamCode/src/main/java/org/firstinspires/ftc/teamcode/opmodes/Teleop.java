@@ -7,6 +7,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.commands.IntakeDefaultCommand;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.commands.DefaultMecanumDriveCommand;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
@@ -15,6 +17,7 @@ public abstract class Teleop extends StealthOpMode {
 
     // Subsystems
     SimpleMecanumDriveSubsystem drive;
+    IntakeSubsystem intake;
 
     // Game controllers
     GamepadEx driveGamepad;
@@ -25,6 +28,8 @@ public abstract class Teleop extends StealthOpMode {
     public void initialize() {
         // Setup and register all of your subsystems here
         drive = new SimpleMecanumDriveSubsystem(hardwareMap);
+        intake = new IntakeSubsystem(hardwareMap);
+
 
         register(drive);
 
@@ -41,6 +46,13 @@ public abstract class Teleop extends StealthOpMode {
                         () -> driveGamepad.gamepad.left_stick_y,
                         () -> driveGamepad.gamepad.left_stick_x,
                         () -> driveGamepad.gamepad.right_stick_x
+                )
+        );
+
+        intake.setDefaultCommand(
+                new IntakeDefaultCommand(
+                        () -> (driveGamepad.gamepad.right_trigger - driveGamepad.gamepad.left_trigger),
+                        intake
                 )
         );
 
