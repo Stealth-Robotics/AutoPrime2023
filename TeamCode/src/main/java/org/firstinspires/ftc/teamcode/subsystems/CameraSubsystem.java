@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+
+import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
+
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -38,5 +42,12 @@ public class CameraSubsystem extends SubsystemBase {
 
     public int GetConePosition() {
         return pipeline.GetConePosition();
+    }
+
+
+    @Override
+    public void periodic() {
+        telemetry.addData("Camera fps", webcam.getFps());
+        telemetry.addData("Parking Position", GetConePosition());
     }
 }
