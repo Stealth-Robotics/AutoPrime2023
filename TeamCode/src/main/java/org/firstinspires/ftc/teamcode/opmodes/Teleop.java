@@ -7,7 +7,10 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.commands.DefaultElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeDefaultCommand;
+import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
+import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.commands.DefaultMecanumDriveCommand;
@@ -19,6 +22,8 @@ public abstract class Teleop extends StealthOpMode {
     SimpleMecanumDriveSubsystem drive;
     IntakeSubsystem intake;
 
+    ElevatorSubsystem elevator;
+
     // Game controllers
     GamepadEx driveGamepad;
     GamepadEx mechGamepad;
@@ -29,6 +34,7 @@ public abstract class Teleop extends StealthOpMode {
         // Setup and register all of your subsystems here
         drive = new SimpleMecanumDriveSubsystem(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
+        elevator = new ElevatorSubsystem(hardwareMap);
 
 
         register(drive);
@@ -49,14 +55,22 @@ public abstract class Teleop extends StealthOpMode {
                 )
         );
 
+        elevator.setDefaultCommand(new DefaultElevatorCommand(elevator,
+                        () -> (mechGamepad.gamepad.left_trigger - mechGamepad.gamepad.right_trigger)
+
+                )
+        );
+
         intake.setDefaultCommand(
                 new IntakeDefaultCommand(
-                        () -> (driveGamepad.gamepad.right_trigger - driveGamepad.gamepad.left_trigger),
-                        intake
+                        intake,
+                        () -> driveGamepad.gamepad.right_bumper,
+                        () -> driveGamepad.gamepad.left_bumper
                 )
         );
 
         // Setup all of your controllers' buttons and triggers here
+        mechGamepad.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ResetElevatorCommand(elevator));
         driveGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> drive.togglefieldcentric()));
         driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> drive.resetHeading()));
     }

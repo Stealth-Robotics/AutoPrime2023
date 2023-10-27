@@ -4,14 +4,17 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class IntakeDefaultCommand extends CommandBase {
-    DoubleSupplier trigger;
+    BooleanSupplier forward;
+    BooleanSupplier reverse;
     IntakeSubsystem intake;
 
-    public IntakeDefaultCommand(DoubleSupplier trigger, IntakeSubsystem intake) {
-        this.trigger = trigger;
+    public IntakeDefaultCommand(IntakeSubsystem intake, BooleanSupplier forward, BooleanSupplier reverse) {
+        this.forward = forward;
+        this.reverse = reverse;
         this.intake = intake;
 
         addRequirements(intake);
@@ -19,6 +22,14 @@ public class IntakeDefaultCommand extends CommandBase {
     }
 
     public void execute() {
-        intake.SetIntakePower(trigger.getAsDouble());
+        if(forward.getAsBoolean()){
+            intake.SetIntakePower(1);
+        }
+        else if(reverse.getAsBoolean()){
+            intake.SetIntakePower(-1);
+        }
+        else{
+            intake.SetIntakePower(0);
+        }
     }
 }
