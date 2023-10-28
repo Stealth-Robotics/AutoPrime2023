@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.ClawSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
+import org.stealthrobotics.library.Alliance;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
 
 @Autonomous(name = "LeftSideStart", preselectTeleOp = "BLUE | Tele-Op")
@@ -23,7 +24,7 @@ public class LStartAuto extends StealthOpMode {
     public void initialize() {
         drive = new SimpleMecanumDriveSubsystem(hardwareMap);
         elevator = new ElevatorSubsystem(hardwareMap);
-        camera = new CameraSubsystem(hardwareMap);
+        camera = new CameraSubsystem(hardwareMap, Alliance.RED);
         arm = new ArmSubsystem(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
         claw = new ClawSubsystem(hardwareMap);

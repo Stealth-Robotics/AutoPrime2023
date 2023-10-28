@@ -10,10 +10,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.commands.DefaultElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeDefaultCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
+import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.commands.DefaultMecanumDriveCommand;
+import org.stealthrobotics.library.Alliance;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
 
 public abstract class Teleop extends StealthOpMode {
@@ -23,6 +25,8 @@ public abstract class Teleop extends StealthOpMode {
     IntakeSubsystem intake;
 
     ElevatorSubsystem elevator;
+
+    CameraSubsystem camera;
 
     // Game controllers
     GamepadEx driveGamepad;
@@ -35,6 +39,7 @@ public abstract class Teleop extends StealthOpMode {
         drive = new SimpleMecanumDriveSubsystem(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
         elevator = new ElevatorSubsystem(hardwareMap);
+        camera = new CameraSubsystem(hardwareMap, Alliance.RED);
 
 
         register(drive);

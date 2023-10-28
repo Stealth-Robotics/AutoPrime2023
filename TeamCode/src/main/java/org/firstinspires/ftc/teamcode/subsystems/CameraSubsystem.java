@@ -1,53 +1,52 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-
 import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 
+import android.util.Size;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
+import org.firstinspires.ftc.teamcode.subsystems.pipelines.PropProcessor;
 import org.firstinspires.ftc.teamcode.subsystems.pipelines.TeamPropDetection;
+import org.firstinspires.ftc.vision.VisionPortal;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.stealthrobotics.library.Alliance;
 
 public class CameraSubsystem extends SubsystemBase {
-    private final OpenCvCamera webcam;
-    private final TeamPropDetection pipeline;
 
-    private static final int CAMERA_WIDTH = 320;
-    private static final int CAMERA_HEIGHT = 240;
+    private final VisionPortal portal;
+    private final Alliance alliance;
+    PropProcessor processor;
+    public CameraSubsystem(HardwareMap hardwareMap, Alliance alliance){
 
-    public CameraSubsystem(HardwareMap hardwareMap) {
-        //initialize the camera
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        this.alliance = alliance;
+        //inits processor based on specified alliance
+        processor = new PropProcessor(alliance);
+        WebcamName webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
+        //sets camera info using processor
+        portal = new VisionPortal.Builder()
+                .setCamera(webcam)
+                .setCameraResolution(new Size(640, 480))
+                .setCamera(BuiltinCameraDirection.BACK)
+                .addProcessor(processor)
+                .build();
 
-        pipeline = new TeamPropDetection();
-        webcam.setPipeline(pipeline);
 
-        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                webcam.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.UPRIGHT);
-            }
-
-            @Override
-            public void onError(int errorCode) {
-                // This will be called if the camera could not be opened
-            }
-        });
     }
-
-    public int GetConePosition() {
-        return pipeline.GetConePosition();
-    }
-
 
     @Override
     public void periodic() {
-        telemetry.addData("Camera fps", webcam.getFps());
-        telemetry.addData("Parking Position", GetConePosition());
+        telemetry.addData("position: ", processor.getOutStr());
     }
+
+
 }
