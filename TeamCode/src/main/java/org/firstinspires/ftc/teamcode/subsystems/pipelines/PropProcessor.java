@@ -25,16 +25,16 @@ public class PropProcessor implements VisionProcessor {
 
     static final Rect LEFT_RECTANGLE = new Rect(
             new Point(0, 0),
-            new Point(100, 480)
+            new Point(220, 480)
     );
 
     static final Rect RIGHT_RECTANGLE = new Rect(
-            new Point(500, 0),
+            new Point(450, 0),
             new Point(640, 480)
     );
     static final Rect CENTER_RECT = new Rect(
-            new Point(100, 0),
-            new Point(500, 480)
+            new Point(220, 0),
+            new Point(450, 480)
     );
 
     Scalar lowHSVColorUpper;
@@ -67,6 +67,7 @@ public class PropProcessor implements VisionProcessor {
 
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
+        Mat drawMat = frame;
         //convert to hsv for thresholding
         Imgproc.cvtColor(frame, testMat, Imgproc.COLOR_RGB2HSV);
 
@@ -94,8 +95,9 @@ public class PropProcessor implements VisionProcessor {
         else if(rightBox == max) outStr = "right";
         else outStr = "center";
 
-
-        finalMat.copyTo(frame);
+        Imgproc.line(drawMat, new Point(220, 0), new Point(220, 480), new Scalar(0, 255, 0), 4);
+        Imgproc.line(drawMat, new Point(450, 0), new Point(450, 480), new Scalar(0, 255, 0), 4);
+        drawMat.copyTo(frame);
 
         return null;
     }
