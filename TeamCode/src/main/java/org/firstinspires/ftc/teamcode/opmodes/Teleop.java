@@ -10,9 +10,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.commands.DefaultElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeDefaultCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
+import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.commands.DefaultMecanumDriveCommand;
 import org.stealthrobotics.library.Alliance;
@@ -25,6 +27,10 @@ public abstract class Teleop extends StealthOpMode {
     IntakeSubsystem intake;
 
     ElevatorSubsystem elevator;
+
+    ArmSubsystem arm;
+
+    LeverSubsystem lever;
 
     CameraSubsystem camera;
 
@@ -39,6 +45,8 @@ public abstract class Teleop extends StealthOpMode {
         drive = new SimpleMecanumDriveSubsystem(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
         elevator = new ElevatorSubsystem(hardwareMap);
+        lever = new LeverSubsystem(hardwareMap);
+        arm  = new ArmSubsystem(hardwareMap);
         camera = new CameraSubsystem(hardwareMap, Alliance.RED);
 
 
@@ -78,6 +86,8 @@ public abstract class Teleop extends StealthOpMode {
         mechGamepad.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ResetElevatorCommand(elevator));
         driveGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> drive.togglefieldcentric()));
         driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> drive.resetHeading()));
+
+        mechGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> lever.toggle()));
     }
 
     /**
