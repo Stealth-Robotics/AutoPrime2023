@@ -8,12 +8,16 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.opmodes.Teleop;
+
 public class ArmSubsystem extends SubsystemBase {
 
     private final Servo armServo;
 
-    public static double UP_POSITION = 0;
-    public static double DOWN_POSITION = 0;
+    public static double SCORE_POSITION = 0;
+    public static double INTAKE_POSITION = 0;
+
+    public static  double TEST_POSITION = 0.5;
 
     private boolean up = false;
 
@@ -21,22 +25,26 @@ public class ArmSubsystem extends SubsystemBase {
         armServo = hardwareMap.get(Servo.class, "armServo");
     }
 
-    public void up() {
-        armServo.setPosition(UP_POSITION);
+    public void scorePosition() {
+        armServo.setPosition(SCORE_POSITION);
         up = true;
     }
 
-    public void down() {
-        armServo.setPosition(DOWN_POSITION);
+    public void intakePosition() {
+        armServo.setPosition(INTAKE_POSITION);
         up = false;
     }
 
     public void toggle() {
         if (up) {
-            down();
+            intakePosition();
         }else{
-            up();
+            scorePosition();
         }
+    }
+
+    public void test() {
+        armServo.setPosition(TEST_POSITION);
     }
 
     public void periodic() {
