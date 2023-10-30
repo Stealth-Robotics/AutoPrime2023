@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -10,14 +11,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
+@Config
 public class ArmSubsystem extends SubsystemBase {
 
     private final Servo armServo;
 
-    public static double SCORE_POSITION = 0;
-    public static double INTAKE_POSITION = 0;
-
-    public static  double TEST_POSITION = 0.5;
+    public static double SCORE_POSITION = 0.001;
+    public static double INTAKE_POSITION = 0.59;
 
     private boolean up = false;
 
@@ -41,10 +41,6 @@ public class ArmSubsystem extends SubsystemBase {
         }else{
             scorePosition();
         }
-    }
-
-    public void test() {
-        armServo.setPosition(TEST_POSITION);
     }
 
     public void periodic() {
