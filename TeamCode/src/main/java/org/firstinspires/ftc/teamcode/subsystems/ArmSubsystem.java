@@ -16,8 +16,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final Servo armServo;
 
-    public static double SCORE_POSITION = 0.001;
-    public static double INTAKE_POSITION = 0.59;
+    public static double SCORE_POSITION = 0;
+    public static double INTAKE_POSITION = 1;
 
     private boolean up = false;
 
@@ -33,6 +33,10 @@ public class ArmSubsystem extends SubsystemBase {
     public void intakePosition() {
         armServo.setPosition(INTAKE_POSITION);
         up = false;
+    }
+
+    public void GoToPosition(double position) {
+        armServo.setPosition(position);
     }
 
     public void toggle() {
