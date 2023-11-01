@@ -77,7 +77,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         x = x * Math.abs(x);
         rotation = rotation * Math.abs(rotation);
 
-        drive(y*0.5, x*0.5, rotation*0.5);
+        drive(y, x, rotation);
     }
 
     public void togglefieldcentric() {
