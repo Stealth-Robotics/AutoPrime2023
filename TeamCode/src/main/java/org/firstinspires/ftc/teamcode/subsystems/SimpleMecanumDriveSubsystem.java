@@ -17,6 +17,7 @@ import org.stealthrobotics.library.AutoToTeleStorage;
  * This is the most basic Mecanum subsystem you can have, and provides simple methods to drive and stop.
  */
 public class SimpleMecanumDriveSubsystem extends SubsystemBase {
+    final DcMotor forwardEncoder;
     final DcMotor leftFrontDrive;
     final DcMotor leftRearDrive;
     final DcMotor rightFrontDrive;
@@ -30,7 +31,9 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         leftRearDrive = hardwareMap.get(DcMotor.class, "leftRearDrive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
+        forwardEncoder = hardwareMap.get(DcMotor.class, "forwardsOdometry");
 
+        forwardEncoder.setDirection(DcMotor.Direction.REVERSE);
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -128,7 +131,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
     }
 
     public int getTicks(){
-        return leftFrontDrive.getCurrentPosition();
+        return forwardEncoder.getCurrentPosition();
     }
 
     @Override

@@ -48,5 +48,6 @@ public class CameraSubsystem extends SubsystemBase {
         telemetry.addData("position: ", processor.getOutStr());
     }
 
+    public String getConePos(){ return processor.getOutStr(); }
 
 }
