@@ -23,18 +23,23 @@ public class PropProcessor implements VisionProcessor {
     String outStr = "left";
     //TODO: tune these values
 
+    static final Point LeftPoint1 = new Point(0,160);
+    static final Point LeftPoint2 = new Point(30,270);
     static final Rect LEFT_RECTANGLE = new Rect(
-            new Point(0, 0),
-            new Point(220, 480)
+            LeftPoint1,
+            LeftPoint2
     );
-
-    static final Rect RIGHT_RECTANGLE = new Rect(
-            new Point(450, 0),
-            new Point(640, 480)
-    );
+    static final Point CenterPoint1 = new Point(200,160);
+    static final Point CenterPoint2 = new Point(290,250);
     static final Rect CENTER_RECT = new Rect(
-            new Point(220, 0),
-            new Point(450, 480)
+            CenterPoint1,
+            CenterPoint2
+    );
+    static final Point RightPoint1 = new Point(500,160);
+    static final Point RightPoint2 = new Point(620,250);
+    static final Rect RIGHT_RECTANGLE = new Rect(
+            RightPoint1,
+            RightPoint2
     );
 
     Scalar lowHSVColorUpper;
@@ -84,10 +89,10 @@ public class PropProcessor implements VisionProcessor {
         lowMat.release();
         highMat.release();
 
-        //gets the sum of the pixels in each rectangle
-        double leftBox = Core.sumElems(finalMat.submat(LEFT_RECTANGLE)).val[0];
-        double rightBox = Core.sumElems(finalMat.submat(RIGHT_RECTANGLE)).val[0];
-        double centerBox = Core.sumElems(finalMat.submat(CENTER_RECT)).val[0];
+        //gets the average of the pixels in each rectangle
+        double leftBox = Core.sumElems(finalMat.submat(LEFT_RECTANGLE)).val[0] / (LEFT_RECTANGLE.width * LEFT_RECTANGLE.height);
+        double rightBox = Core.sumElems(finalMat.submat(RIGHT_RECTANGLE)).val[0] / (RIGHT_RECTANGLE.width * RIGHT_RECTANGLE.height);
+        double centerBox = Core.sumElems(finalMat.submat(CENTER_RECT)).val[0] / (CENTER_RECT.width * CENTER_RECT.height);
 
         //finds max of 3 areas and sets the output string to the corresponding area
         double max = Math.max(Math.max(leftBox, rightBox), centerBox);
@@ -95,8 +100,12 @@ public class PropProcessor implements VisionProcessor {
         else if(rightBox == max) outStr = "right";
         else outStr = "center";
 
-        Imgproc.line(drawMat, new Point(220, 0), new Point(220, 480), new Scalar(0, 255, 0), 4);
-        Imgproc.line(drawMat, new Point(450, 0), new Point(450, 480), new Scalar(0, 255, 0), 4);
+        //Imgproc.line(drawMat, new Point(220, 0), new Point(220, 480), new Scalar(0, 255, 0), 4);
+        //Imgproc.line(drawMat, new Point(450, 0), new Point(450, 480), new Scalar(0, 255, 0), 4);
+        Imgproc.rectangle(drawMat,LeftPoint1,LeftPoint2,new Scalar(0,255,0),4);
+        Imgproc.rectangle(drawMat,CenterPoint1,CenterPoint2,new Scalar(0,255,0),4);
+        Imgproc.rectangle(drawMat,RightPoint1,RightPoint2,new Scalar(0,255,0),4);
+
         drawMat.copyTo(frame);
 
         return null;

@@ -89,12 +89,11 @@ public abstract class Teleop extends StealthOpMode {
         mechGamepad.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ResetElevatorCommand(elevator));
         driveGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> drive.togglefieldcentric()));
         driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> drive.resetHeading()));
-       // driveGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand() -> )
+        driveGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> drive.toggleSlowMode()));
 
         mechGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> lever.toggle()));
         mechGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> arm.toggle()));
-        mechGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> airplane.open()));
-        mechGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> airplane.close()));
+        mechGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> airplane.toggle()));
     }
 
     /**

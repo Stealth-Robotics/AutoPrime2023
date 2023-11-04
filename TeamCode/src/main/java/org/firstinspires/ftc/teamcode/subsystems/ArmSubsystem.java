@@ -16,8 +16,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final Servo armServo;
 
-    public static double SCORE_POSITION = 0.012;
-    public static double INTAKE_POSITION = 0.98;
+    public static double SCORE_POSITION = 0;
+    public static double INTAKE_POSITION = 1;
 
     private boolean up = false;
 

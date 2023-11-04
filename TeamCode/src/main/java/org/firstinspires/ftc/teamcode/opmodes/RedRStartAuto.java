@@ -44,6 +44,8 @@ public class RedRStartAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
+        //guesses center for now because the angle and camera don't work rn
+        ConeLocation = "center";
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
@@ -65,7 +67,7 @@ public class RedRStartAuto extends StealthOpMode {
             default:
                 return new SequentialCommandGroup(
                         new InstantCommand(() -> airplane.close()),
-                        new DriveForwardInchesCommand(drive,24),
+                        new DriveForwardInchesCommand(drive,23),
                         new EjectCommand(intake)
                 );
 
