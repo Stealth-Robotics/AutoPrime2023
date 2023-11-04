@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.commands.DefaultElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeDefaultCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
+import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
@@ -34,6 +35,8 @@ public abstract class Teleop extends StealthOpMode {
 
     CameraSubsystem camera;
 
+    AirplaneSubsystem airplane;
+
     // Game controllers
     GamepadEx driveGamepad;
     GamepadEx mechGamepad;
@@ -48,7 +51,7 @@ public abstract class Teleop extends StealthOpMode {
         lever = new LeverSubsystem(hardwareMap);
         arm  = new ArmSubsystem(hardwareMap);
         camera = new CameraSubsystem(hardwareMap, Alliance.RED);
-
+        airplane = new AirplaneSubsystem(hardwareMap);
 
         register(drive);
 
@@ -90,6 +93,8 @@ public abstract class Teleop extends StealthOpMode {
 
         mechGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> lever.toggle()));
         mechGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> arm.toggle()));
+        mechGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> airplane.open()));
+        mechGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> airplane.close()));
     }
 
     /**

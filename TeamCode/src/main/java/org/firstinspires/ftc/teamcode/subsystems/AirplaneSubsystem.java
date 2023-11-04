@@ -14,12 +14,13 @@ public class AirplaneSubsystem extends SubsystemBase {
     private final Servo airplaneServer;
 
     public static double OPEN_POSITION = 1;
-    public static double CLOSE_POSITION = 0;
+    public static double CLOSE_POSITION = 0.36;
 
     private boolean open = false;
 
     public AirplaneSubsystem(HardwareMap hardwareMap) {
         airplaneServer = hardwareMap.get(Servo.class, "airplaneServo");
+        close();
     }
 
     public void open() {
