@@ -10,8 +10,8 @@ public class DriveForwardInchesCommand extends CommandBase {
     final SimpleMecanumDriveSubsystem drive;
     final double forward;
 
-    public static double MOTOR_TICS_PER_REVOLUTION = 537.7;
-    public static double WHEEL_DIAMETER_MM = 96;
+    public static double MOTOR_TICS_PER_REVOLUTION = 8192;
+    public static double WHEEL_DIAMETER_MM = 35;
     public static double DISTANCE_PER_REVOLUTION_MM = WHEEL_DIAMETER_MM * Math.PI;
     public static double TICS_PER_MM = MOTOR_TICS_PER_REVOLUTION / DISTANCE_PER_REVOLUTION_MM;
     public static double TICS_PER_INCHES = TICS_PER_MM * 25.4;
