@@ -1,7 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
+import org.firstinspires.ftc.teamcode.commands.EjectCommand;
+import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
@@ -31,5 +36,32 @@ public class BlueRStartAuto extends StealthOpMode {
         register(drive, elevator, camera, lever, intake, arm);
 
         // tell the camera, we are starting on a specific side of the field
+    }
+    @Override
+    public Command getAutoCommand() {
+        String ConeLocation = camera.getConePos();
+        switch (ConeLocation){
+            case "left":
+                return new SequentialCommandGroup(
+                        new DriveForwardInchesCommand(drive,24),
+                        new TurnToDegreesCommand(drive,-90),
+                        new EjectCommand(intake),
+                        new TurnToDegreesCommand(drive,0)
+                );
+            case "right":
+                return new SequentialCommandGroup(
+                        new DriveForwardInchesCommand(drive,24),
+                        new TurnToDegreesCommand(drive,90),
+                        new EjectCommand(intake),
+                        new TurnToDegreesCommand(drive,0)
+                );
+
+            default:
+                return new SequentialCommandGroup(
+                        new DriveForwardInchesCommand(drive,24),
+                        new EjectCommand(intake)
+                );
+
+        }
     }
 }
