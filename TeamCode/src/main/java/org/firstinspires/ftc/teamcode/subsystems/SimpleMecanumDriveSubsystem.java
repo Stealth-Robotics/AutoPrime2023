@@ -33,7 +33,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
         forwardEncoder = hardwareMap.get(DcMotor.class, "forwardsOdometry");
 
-        forwardEncoder.setDirection(DcMotor.Direction.REVERSE);
+        forwardEncoder.setDirection(DcMotor.Direction.FORWARD);
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
