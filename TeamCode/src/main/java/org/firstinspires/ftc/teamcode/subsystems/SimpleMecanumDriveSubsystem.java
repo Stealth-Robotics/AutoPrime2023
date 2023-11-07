@@ -84,7 +84,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         drive(y, x, rotation);
     }
 
-    public void togglefieldcentric() {
+    public void toggleFieldCentric() {
         fieldcentric = !fieldcentric;
     }
 
