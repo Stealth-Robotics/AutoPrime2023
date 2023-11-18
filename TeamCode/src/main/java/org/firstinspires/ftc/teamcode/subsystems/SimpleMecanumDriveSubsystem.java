@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -17,7 +18,7 @@ import org.stealthrobotics.library.AutoToTeleStorage;
  * This is the most basic Mecanum subsystem you can have, and provides simple methods to drive and stop.
  */
 public class SimpleMecanumDriveSubsystem extends SubsystemBase {
-    final DcMotor forwardEncoder;
+    final DcMotorEx forwardEncoder;
     final DcMotor leftFrontDrive;
     final DcMotor leftRearDrive;
     final DcMotor rightFrontDrive;
@@ -32,7 +33,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         leftRearDrive = hardwareMap.get(DcMotor.class, "leftRearDrive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
-        forwardEncoder = hardwareMap.get(DcMotor.class, "forwardsOdometry");
+        forwardEncoder = hardwareMap.get(DcMotorEx.class, "rightArmMotor");
 
         forwardEncoder.setDirection(DcMotor.Direction.REVERSE);
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -43,6 +44,8 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         leftRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        forwardEncoder.setDirection(DcMotor.Direction.FORWARD);
+        forwardEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Retrieve the IMU from the hardware map
         imu = hardwareMap.get(IMU.class, "imu");
@@ -82,6 +85,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         rotation = rotation * Math.abs(rotation);
 
         drive(y, x, rotation);
+
     }
 
     public void toggleFieldCentric() {
@@ -144,9 +148,9 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        telemetry.addData("Drive ticks", getTicks());
-        telemetry.addData("Field centric driving", fieldcentric);
-        telemetry.addData("Bot Heading", getHeading());
+//        telemetry.addData("Drive ticks", getTicks());
+  //      telemetry.addData("Field centric driving", fieldcentric);
+    //    telemetry.addData("Bot Heading", getHeading());
     }
     public void toggleSlowMode(){
         slowMode = !slowMode;
