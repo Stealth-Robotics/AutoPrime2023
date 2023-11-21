@@ -5,12 +5,14 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.commands.DefaultClimberCommand;
 import org.firstinspires.ftc.teamcode.commands.DefaultElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeDefaultCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
 import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ClimberSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
@@ -33,6 +35,8 @@ public abstract class Teleop extends StealthOpMode {
 
     CameraSubsystem camera;
 
+    ClimberSubsystem climber;
+
     AirplaneSubsystem airplane;
 
     // Game controllers
@@ -49,9 +53,10 @@ public abstract class Teleop extends StealthOpMode {
         lever = new LeverSubsystem(hardwareMap);
         arm  = new ArmSubsystem(hardwareMap);
         camera = new CameraSubsystem(hardwareMap, Alliance.RED);
+        climber = new ClimberSubsystem(hardwareMap);
         airplane = new AirplaneSubsystem(hardwareMap);
 
-        register(drive);
+        register(drive, intake, elevator, lever, arm, camera, airplane, climber);
 
         driveGamepad = new GamepadEx(gamepad1);
         mechGamepad = new GamepadEx(gamepad2);
@@ -66,6 +71,14 @@ public abstract class Teleop extends StealthOpMode {
                         () -> driveGamepad.gamepad.left_stick_y,
                         () -> driveGamepad.gamepad.left_stick_x,
                         () -> driveGamepad.gamepad.right_stick_x
+                )
+        );
+
+        climber.setDefaultCommand(
+                new DefaultClimberCommand(
+                        climber,
+                        () -> mechGamepad.gamepad.right_bumper,
+                        () -> mechGamepad.gamepad.left_bumper
                 )
         );
 
@@ -92,6 +105,8 @@ public abstract class Teleop extends StealthOpMode {
         mechGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> lever.toggle()));
         mechGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> arm.toggle()));
         mechGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> airplane.toggle()));
+
+
     }
 
     /**
