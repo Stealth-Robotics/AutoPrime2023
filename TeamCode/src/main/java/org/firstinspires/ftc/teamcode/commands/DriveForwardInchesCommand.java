@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commands;
 import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 
@@ -19,6 +20,8 @@ public class DriveForwardInchesCommand extends CommandBase {
     public static double TICS_PER_INCHES = TICS_PER_MM * 25.4;
 
     int endTicks; // How far are we going?
+    int curTicks = 0; // Where are we now
+    int count = 0; // debug
     boolean forwardDir; // Forward or backwards?
 
     public DriveForwardInchesCommand(SimpleMecanumDriveSubsystem drive, double forward) {
@@ -40,18 +43,22 @@ public class DriveForwardInchesCommand extends CommandBase {
 
     @Override
     public void execute() {
+        curTicks = drive.getTicks();
+        count++;
+        telemetry.addData("count", count);
         telemetry.addData("endTicks", endTicks);
+        telemetry.addData("curTicks", curTicks);
+        telemetry.update();
     }
 
     @Override
     public boolean isFinished() {
-        int t = drive.getTicks();
         if (forwardDir) {
-            if (t >= endTicks) {
+            if (curTicks >= endTicks) {
                 return true;
             }
         } else {
-            if (t <= endTicks) {
+            if (curTicks <= endTicks) {
                 return true;
             }
         }
