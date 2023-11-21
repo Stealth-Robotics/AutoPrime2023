@@ -308,4 +308,8 @@ public class SampleMecanumDrive extends MecanumDrive {
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }
+
+    public void stop() {
+        setMotorPowers(0,0,0,0);
+    }
 }
