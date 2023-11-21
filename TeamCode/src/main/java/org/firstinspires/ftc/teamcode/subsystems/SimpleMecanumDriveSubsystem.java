@@ -34,6 +34,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
         forwardEncoder = hardwareMap.get(DcMotorEx.class, "rightArmMotor");
+//        forwardEncoder = hardwareMap.get(DcMotorEx.class, "leftArmMotor");   // <--- this is forward
 
         forwardEncoder.setDirection(DcMotor.Direction.REVERSE);
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -44,7 +45,7 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
         leftRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        forwardEncoder.setDirection(DcMotor.Direction.FORWARD);
+        forwardEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         forwardEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Retrieve the IMU from the hardware map
