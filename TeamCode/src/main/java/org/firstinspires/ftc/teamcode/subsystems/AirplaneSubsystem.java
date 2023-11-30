@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class AirplaneSubsystem extends SubsystemBase {
     private final Servo airplaneServer;
 
-    public static double OPEN_POSITION = 1;
-    public static double CLOSE_POSITION = 0.36;
+    public static double OPEN_POSITION = 0.5;
+    public static double CLOSE_POSITION = -0.13;
 
     private boolean open = false;
 
