@@ -18,10 +18,10 @@ import org.stealthrobotics.library.AutoToTeleStorage;
  * This is the most basic Mecanum subsystem you can have, and provides simple methods to drive and stop.
  */
 public class SimpleMecanumDriveSubsystem extends SubsystemBase {
-    final DcMotor leftFrontDrive;
-    final DcMotor leftRearDrive;
-    final DcMotor rightFrontDrive;
-    final DcMotor rightRearDrive;
+    public final DcMotor leftFrontDrive;
+    public final DcMotor leftRearDrive;
+    public final DcMotor rightFrontDrive;
+    public DcMotor rightRearDrive;
     final IMU imu;
     boolean fieldcentric = true;
     boolean slowMode = false;
@@ -146,6 +146,11 @@ public class SimpleMecanumDriveSubsystem extends SubsystemBase {
 //        telemetry.addData("Drive ticks", getTicks());
   //      telemetry.addData("Field centric driving", fieldcentric);
     //    telemetry.addData("Bot Heading", getHeading());
+       // telemetry.addData("leftfrontpower", leftFrontDrive.getPower());
+       // telemetry.addData("leftrearpower", leftRearDrive.getPower());
+       // telemetry.addData("rightfrontpower", rightFrontDrive.getPower());
+       // telemetry.addData("rightrearpower", rightRearDrive.getPower());
+
     }
     public void toggleSlowMode(){
         slowMode = !slowMode;
