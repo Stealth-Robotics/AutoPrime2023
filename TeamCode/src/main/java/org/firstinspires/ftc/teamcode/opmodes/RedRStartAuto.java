@@ -5,10 +5,13 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.commands.DefaultElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
 import org.firstinspires.ftc.teamcode.commands.EjectCommand;
+import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
 import org.firstinspires.ftc.teamcode.commands.StrafeForInches;
 import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
 import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
@@ -51,24 +54,39 @@ public class RedRStartAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        ConeLocation = "center";
         //guesses center for now because the angle and camera don't work rn
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
-
+                        new DriveForwardInchesCommand(drive,28),
+                        new TurnToDegreesCommand(drive, -98),
+                        new DriveForwardInchesCommand(drive,-3),
+                        new InstantCommand(()-> intake.SetIntakePower(1)),
+                        new WaitCommand(1500),
+                        new InstantCommand(()-> intake.SetIntakePower(0))
                 );
             case "right":
                 return new SequentialCommandGroup(
-
+                        new DriveForwardInchesCommand(drive,26),
+                        new TurnToDegreesCommand(drive, 98),
+                        new DriveForwardInchesCommand(drive,-3),
+                        new InstantCommand(()-> intake.SetIntakePower(1)),
+                        new WaitCommand(1500),
+                        new InstantCommand(()-> intake.SetIntakePower(0))
                 );
 
             default:
                 return new SequentialCommandGroup(
                         new DriveForwardInchesCommand(drive,30),
                         new DriveForwardInchesCommand(drive,-6),
-                        new TurnToDegreesCommand(drive, 88)
-                );
+                        new DriveForwardInchesCommand(drive,2),
+                        new InstantCommand(()-> intake.SetIntakePower(1)),
+                        new WaitCommand(1500),
+                        new InstantCommand(()-> intake.SetIntakePower(0)),
+                        new DriveForwardInchesCommand(drive,-21),
+                        new TurnToDegreesCommand(drive, -99),
+                        new DriveForwardInchesCommand(drive,-48)
+                        );
 
         }
     }

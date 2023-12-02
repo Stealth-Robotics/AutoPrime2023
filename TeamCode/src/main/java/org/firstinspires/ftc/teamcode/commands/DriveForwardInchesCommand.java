@@ -5,6 +5,8 @@ import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.util.MathUtils;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
@@ -39,7 +41,8 @@ public class DriveForwardInchesCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        endTicks = drive.getTicks() - (int) (distance * TICKS_PER_IN);
+
+        endTicks = drive.getTicks() + (int) (distance * TICKS_PER_IN);
         pid.setSetPoint(endTicks);
         pid.setTolerance(10);
         startTime = System.nanoTime();
@@ -47,22 +50,15 @@ public class DriveForwardInchesCommand extends CommandBase {
 
     @Override
     public void execute() {
-        long now = System.nanoTime();
-        double dt = (now - startTime) * 1E-9;
-        pid.setPIDF(pid_kp, pid_ki, pid_kd, pid_kf);
-        // Very simple PID to get us to the destination
-        double power = pid.calculate(-drive.getTicks());
+        double power = pid.calculate(drive.getTicks());
         double maxSpeed = 0.5;
-        if (dt < 0.5) {
-            maxSpeed = maxSpeed * dt * 2;
-        }
-
-        power = -Math.max(-maxSpeed, Math.min(power, maxSpeed));
+        power = MathUtils.clamp(power, -maxSpeed, maxSpeed);
         drive.drive(power, 0, 0);
 
         telemetry.addData("endTicks", endTicks);
         telemetry.addData("currentTicks", drive.getTicks());
         telemetry.addData("power", power);
+        telemetry.addData("error", pid.getPositionError());
         telemetry.update();
     }
 

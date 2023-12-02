@@ -122,6 +122,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
 
         targetTicks = (int) (percent * UPPER_LIMIT_TICKS);
+
     }
 
     /**
