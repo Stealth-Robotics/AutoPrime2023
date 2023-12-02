@@ -35,7 +35,7 @@ public class PropProcessor implements VisionProcessor {
             CenterPoint1,
             CenterPoint2
     );
-    static final Point RightPoint1 = new Point(500,160);
+    static final Point RightPoint1 = new Point(450,180);
     static final Point RightPoint2 = new Point(620,250);
     static final Rect RIGHT_RECTANGLE = new Rect(
             RightPoint1,

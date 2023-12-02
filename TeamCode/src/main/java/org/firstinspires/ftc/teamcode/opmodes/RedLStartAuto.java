@@ -26,10 +26,10 @@ import org.stealthrobotics.library.opmodes.StealthOpMode;
 @Autonomous(name = "RedLeftSideStart", preselectTeleOp = "RED | Tele-Op")
 public class RedLStartAuto extends StealthOpMode {
 
-    DriveSubsystem drive;
     ElevatorSubsystem elevator;
 
-    SampleMecanumDrive mecanumDrive;
+    SimpleMecanumDriveSubsystem drive;
+
     CameraSubsystem camera;
     LeverSubsystem lever;
     ArmSubsystem arm;
@@ -37,10 +37,9 @@ public class RedLStartAuto extends StealthOpMode {
     AirplaneSubsystem airplane;
 
     public void initialize() {
-        mecanumDrive = new SampleMecanumDrive(hardwareMap);
-        drive = new DriveSubsystem(mecanumDrive, hardwareMap);
+        drive = new SimpleMecanumDriveSubsystem(hardwareMap);
         elevator = new ElevatorSubsystem(hardwareMap);
-        camera = new CameraSubsystem(hardwareMap, Alliance.BLUE);
+        camera = new CameraSubsystem(hardwareMap, Alliance.RED);
         arm = new ArmSubsystem(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
         lever = new LeverSubsystem(hardwareMap);
@@ -58,31 +57,22 @@ public class RedLStartAuto extends StealthOpMode {
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
         //guesses center for now because the angle and camera don't work rn
-        ConeLocation = "left";
-
-        drive.setPoseEstimate(-31, -64.5, Math.toRadians(90));
 
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
-                        new InstantCommand(() -> airplane.close()),
-                        new FollowTrajectory(mecanumDrive, RedLeftTrajectories.trajectory1),
-                        new EjectCommand(intake)
+
                 );
             case "right":
                 return new SequentialCommandGroup(
-                        new InstantCommand(() -> airplane.close()),
-                       // new DriveForwardInchesCommand(drive,24),
-                      //  new TurnToDegreesCommand(drive,90),
-                        new EjectCommand(intake)
-                      //  new TurnToDegreesCommand(drive,0)
+
                 );
 
             default:
                 return new SequentialCommandGroup(
-                        new InstantCommand(() -> airplane.close()),
-                     //   new DriveForwardInchesCommand(drive,23),
-                        new EjectCommand(intake)
+                        new DriveForwardInchesCommand(drive,-24),
+                        new DriveForwardInchesCommand(drive, 2),
+                        new TurnToDegreesCommand(drive, -90)
                 );
 
         }

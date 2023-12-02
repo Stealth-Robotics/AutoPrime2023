@@ -2,71 +2,77 @@ package org.firstinspires.ftc.teamcode.commands;
 
 import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.arcrobotics.ftclib.controller.PIDFController;
 
+import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 
+@Config
 public class DriveForwardInchesCommand extends CommandBase {
     final SimpleMecanumDriveSubsystem drive;
-    final double forward;
+    double distance;
+    int end_ticks;
+    public static double TICKS_PER_REVOLUTION = 537.7;
+    public static double WHEEL_DIAMETER_MM = 96;
+    public static double MM_PER_REVOLUTION = WHEEL_DIAMETER_MM * Math.PI;
+    public static double IN_PER_REVOLUTION = MM_PER_REVOLUTION / 25.4;
+    public static double TICKS_PER_IN = TICKS_PER_REVOLUTION / IN_PER_REVOLUTION;
 
-    //TODO:
-
-    public static double MOTOR_TICS_PER_REVOLUTION = 8192;
-    public static double WHEEL_DIAMETER_MM = 35;
-    public static double DISTANCE_PER_REVOLUTION_MM = WHEEL_DIAMETER_MM * Math.PI;
-    public static double TICS_PER_MM = MOTOR_TICS_PER_REVOLUTION / DISTANCE_PER_REVOLUTION_MM;
-    public static double TICS_PER_INCHES = TICS_PER_MM * 25.4;
+    //Variables for Pid Controller
+    public static double pid_kp = 0.05;
+    public static double pid_ki = 0.1;
+    public static double pid_kd;
+    public static double pid_kf;
 
     int endTicks; // How far are we going?
-    int curTicks = 0; // Where are we now
-    int count = 0; // debug
-    boolean forwardDir; // Forward or backwards?
+    long startTime;
 
-    public DriveForwardInchesCommand(SimpleMecanumDriveSubsystem drive, double forward) {
+    PIDFController pid = new PIDFController(pid_kp, pid_ki, pid_kd, pid_kf);
+
+    public DriveForwardInchesCommand(SimpleMecanumDriveSubsystem drive, double distance) {
         this.drive = drive;
-        this.forward = forward;
+        this.distance = distance;
         addRequirements(drive);
     }
 
     @Override
     public void initialize() {
-        forwardDir = forward > 0;
-        endTicks = drive.getTicks() + (int) (forward * TICS_PER_INCHES);
-        double driveSpeed = .5;  // Remember, the stick is backwards!
-        if (!forwardDir) {
-            driveSpeed *= -1.0;
-        }
-        drive.drive(driveSpeed, 0, 0);
+        endTicks = drive.getTicks() - (int) (distance * TICKS_PER_IN);
+        pid.setSetPoint(endTicks);
+        pid.setTolerance(10);
+        startTime = System.nanoTime();
     }
 
     @Override
     public void execute() {
-        curTicks = drive.getTicks();
-        count++;
-        telemetry.addData("count", count);
-        telemetry.addData("endTicks", endTicks);
-        telemetry.addData("curTicks", curTicks);
-        telemetry.update();
-    }
-
-    @Override
-    public boolean isFinished() {
-        if (forwardDir) {
-            if (curTicks >= endTicks) {
-                return true;
-            }
-        } else {
-            if (curTicks <= endTicks) {
-                return true;
-            }
+        long now = System.nanoTime();
+        double dt = (now - startTime) * 1E-9;
+        pid.setPIDF(pid_kp, pid_ki, pid_kd, pid_kf);
+        // Very simple PID to get us to the destination
+        double power = pid.calculate(-drive.getTicks());
+        double maxSpeed = 0.5;
+        if (dt < 0.5) {
+            maxSpeed = maxSpeed * dt * 2;
         }
-        return false;
+
+        power = -Math.max(-maxSpeed, Math.min(power, maxSpeed));
+        drive.drive(power, 0, 0);
+
+        telemetry.addData("endTicks", endTicks);
+        telemetry.addData("currentTicks", drive.getTicks());
+        telemetry.addData("power", power);
+        telemetry.update();
     }
 
     @Override
     public void end(boolean interrupted) {
         drive.stop();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return pid.atSetPoint();
     }
 }

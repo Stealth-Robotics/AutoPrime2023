@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
 import org.firstinspires.ftc.teamcode.commands.EjectCommand;
+import org.firstinspires.ftc.teamcode.commands.StrafeForInches;
 import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
 import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
@@ -41,34 +43,31 @@ public class BlueLStartAuto extends StealthOpMode {
 
         // tell the camera, we are starting on a specific side of the field
     }
+
+    @Override
+    public void whileWaitingToStart() {
+        CommandScheduler.getInstance().run();
+    }
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
         //guesses center for now because the angle and camera don't work rn
-        ConeLocation = "center";
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
-                        new InstantCommand(() -> airplane.close()),
-                        new DriveForwardInchesCommand(drive,24),
-                        new TurnToDegreesCommand(drive,-90),
-                        new EjectCommand(intake),
-                        new TurnToDegreesCommand(drive,0)
+
                 );
             case "right":
                 return new SequentialCommandGroup(
-                        new InstantCommand(() -> airplane.close()),
-                        new DriveForwardInchesCommand(drive,24),
-                        new TurnToDegreesCommand(drive,90),
-                        new EjectCommand(intake),
-                        new TurnToDegreesCommand(drive,0)
+
                 );
 
             default:
                 return new SequentialCommandGroup(
-                        new InstantCommand(() -> airplane.close()),
-                        new DriveForwardInchesCommand(drive,23),
-                        new EjectCommand(intake)
+                        new DriveForwardInchesCommand(drive,0.5),
+                        new DriveForwardInchesCommand(drive, -2),
+                        new TurnToDegreesCommand(drive, -90)
+
                 );
 
         }
