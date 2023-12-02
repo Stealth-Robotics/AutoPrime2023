@@ -62,32 +62,35 @@ public class RedLStartAuto extends StealthOpMode {
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
-                        new DriveForwardInchesCommand(drive,28),
+                        new DriveForwardInchesCommand(drive,27),
+                        new DriveForwardInchesCommand(drive,-2),
                         new TurnToDegreesCommand(drive, -98),
-                        new DriveForwardInchesCommand(drive,-3),
-                        new InstantCommand(()-> intake.SetIntakePower(1)),
-                        new WaitCommand(1000),
+                        new WaitCommand(500),
+                        new InstantCommand(()-> intake.SetIntakePower(0.65)),
+                        new WaitCommand(1800),
                         new InstantCommand(()-> intake.SetIntakePower(0))
 
                 );
             case "right":
                 return new SequentialCommandGroup(
-                        new DriveForwardInchesCommand(drive,26),
+                        new DriveForwardInchesCommand(drive,27),
+                        new DriveForwardInchesCommand(drive,-2),
                         new TurnToDegreesCommand(drive, 98),
-                        new DriveForwardInchesCommand(drive,-3),
-                        new InstantCommand(()-> intake.SetIntakePower(1)),
-                        new WaitCommand(1000),
+                        new WaitCommand(500),
+                        new InstantCommand(()-> intake.SetIntakePower(0.65)),
+                        new WaitCommand(1800),
                         new InstantCommand(()-> intake.SetIntakePower(0))
 
                 );
 
             default:
                 return new SequentialCommandGroup(
-                        new DriveForwardInchesCommand(drive,30),
+                        new DriveForwardInchesCommand(drive,29),
                         new DriveForwardInchesCommand(drive,-6),
-                        new DriveForwardInchesCommand(drive,2),
-                        new InstantCommand(()-> intake.SetIntakePower(1)),
-                        new WaitCommand(1000),
+                        new DriveForwardInchesCommand(drive,4),
+                        new WaitCommand(500),
+                        new InstantCommand(()-> intake.SetIntakePower(0.65)),
+                        new WaitCommand(1800),
                         new InstantCommand(()-> intake.SetIntakePower(0))
                 );
 

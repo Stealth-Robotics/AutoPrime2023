@@ -27,7 +27,7 @@ public class TurnToDegreesCommand extends CommandBase {
         this.drive = drive;
         toRadians = Math.toRadians(degrees);
         addRequirements(drive);
-        pid.setTolerance(2);
+        pid.setTolerance(5);
     }
 
     @Override
