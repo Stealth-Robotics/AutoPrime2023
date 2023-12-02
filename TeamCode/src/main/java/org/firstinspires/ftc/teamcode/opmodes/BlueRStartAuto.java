@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.checkerframework.checker.units.qual.A;
@@ -50,18 +51,33 @@ public class BlueRStartAuto extends StealthOpMode {
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
+                        new DriveForwardInchesCommand(drive,28),
+                        new TurnToDegreesCommand(drive, -98),
+                        new DriveForwardInchesCommand(drive,-3),
+                        new InstantCommand(()-> intake.SetIntakePower(1)),
+                        new WaitCommand(1500),
+                        new InstantCommand(()-> intake.SetIntakePower(0))
 
                 );
             case "right":
                 return new SequentialCommandGroup(
+                        new DriveForwardInchesCommand(drive,26),
+                        new TurnToDegreesCommand(drive, 98),
+                        new DriveForwardInchesCommand(drive,-3),
+                        new InstantCommand(()-> intake.SetIntakePower(1)),
+                        new WaitCommand(1500),
+                        new InstantCommand(()-> intake.SetIntakePower(0))
 
                 );
 
             default:
                 return new SequentialCommandGroup(
-                        new DriveForwardInchesCommand(drive,20),
-                        new DriveForwardInchesCommand(drive, -6),
-                        new TurnToDegreesCommand(drive, -90)
+                        new DriveForwardInchesCommand(drive,30),
+                        new DriveForwardInchesCommand(drive,-6),
+                        new DriveForwardInchesCommand(drive,2),
+                        new InstantCommand(()-> intake.SetIntakePower(1)),
+                        new WaitCommand(1500),
+                        new InstantCommand(()-> intake.SetIntakePower(0))
                 );
 
         }
