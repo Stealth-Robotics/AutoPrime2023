@@ -82,7 +82,10 @@ public class BlueLStartAuto extends StealthOpMode {
                         new DriveForwardInchesCommand(drive,2),
                         new InstantCommand(()-> intake.SetIntakePower(1)),
                         new WaitCommand(1000),
-                        new InstantCommand(()-> intake.SetIntakePower(0))
+                        new InstantCommand(()-> intake.SetIntakePower(0)),
+                        new DriveForwardInchesCommand(drive,-21),
+                        new TurnToDegreesCommand(drive, -99),
+                        new DriveForwardInchesCommand(drive,48)
 
                 );
 
