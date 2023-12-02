@@ -14,7 +14,7 @@ public class AirplaneSubsystem extends SubsystemBase {
     private final Servo airplaneServer;
 
     public static double OPEN_POSITION = 0.5;
-    public static double CLOSE_POSITION = -0.2;
+    public static double CLOSE_POSITION = 0.28;
 
     private boolean open = false;
 
