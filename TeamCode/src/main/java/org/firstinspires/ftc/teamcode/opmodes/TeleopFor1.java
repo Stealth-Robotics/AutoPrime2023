@@ -115,14 +115,10 @@ public abstract class TeleopFor1 extends StealthOpMode {
      */
 
     @SuppressWarnings("unused")
-    @TeleOp(name = "RED | Tele-Op", group = "Red")
+    @TeleOp(name = "Teleop for 1", group = "Red")
     public static class RedTeleop extends TeleopFor1 {
     }
 
-    @SuppressWarnings("unused")
-    @TeleOp(name = "BLUE | Tele-Op", group = "Blue")
-    public static class BlueTeleop extends TeleopFor1 {
-    }
 
     @Override
     public double getFinalHeading() {
