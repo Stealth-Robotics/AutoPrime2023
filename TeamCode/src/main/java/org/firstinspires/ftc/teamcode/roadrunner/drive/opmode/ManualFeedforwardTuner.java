@@ -44,7 +44,6 @@ public class ManualFeedforwardTuner extends LinearOpMode {
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
     private SampleMecanumDrive drive;
-    private SimpleMecanumDriveSubsystem simDrive;
 
     enum Mode {
         DRIVER_MODE,
@@ -69,7 +68,6 @@ public class ManualFeedforwardTuner extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, dashboard.getTelemetry());
 
         drive = new SampleMecanumDrive(hardwareMap);
-        simDrive = new SimpleMecanumDriveSubsystem(hardwareMap);
 
         final VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
@@ -120,11 +118,6 @@ public class ManualFeedforwardTuner extends LinearOpMode {
                     Pose2d poseVelo = Objects.requireNonNull(drive.getPoseVelocity(), "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer.");
                     double currentVelo = poseVelo.getX();
 
-                    // update telemetry
-                    telemetry.addData("leftFrontMotorPower: ", simDrive.leftFrontDrive.getPower());
-                    telemetry.addData("leftRearMotorPower: ", simDrive.leftRearDrive.getPower());
-                    telemetry.addData("rightFrontMotorPower: ", simDrive.rightFrontDrive.getPower());
-                    telemetry.addData("rightRearMotorPower: ", simDrive.rightRearDrive.getPower());
 
                     telemetry.addData("targetVelocity", motionState.getV());
                     telemetry.addData("measuredVelocity", currentVelo);
