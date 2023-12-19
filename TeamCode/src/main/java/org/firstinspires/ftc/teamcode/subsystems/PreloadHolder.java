@@ -21,12 +21,12 @@ public class PreloadHolder extends SubsystemBase {
     }
 
     public void open() {
-        holderServo.setPosition(OPEN_POSITION);
+        holderServo.setPosition(CLOSE_POSITION);
         open = true;
     }
 
     public void close() {
-        holderServo.setPosition(CLOSE_POSITION);
+        holderServo.setPosition(OPEN_POSITION);
         open = false;
     }
 
@@ -39,6 +39,6 @@ public class PreloadHolder extends SubsystemBase {
     }
 
     public void periodic() {
-        telemetry.addData("placer position:", holderServo.getPosition());
+
     }
 }
