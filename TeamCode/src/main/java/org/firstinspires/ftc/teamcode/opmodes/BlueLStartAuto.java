@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.Trajectories.TrajectoryBuilder;
 import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
 import org.firstinspires.ftc.teamcode.commands.EjectCommand;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
+import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
+import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.StrafeForInches;
 import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
@@ -52,6 +54,8 @@ public class BlueLStartAuto extends StealthOpMode {
         preload = new PreloadHolder(hardwareMap);
         register(drive, elevator, camera, lever, intake, arm, airplane, preload);
 
+        schedule(new ResetElevatorCommand(elevator));
+
         // tell the camera, we are starting on a specific side of the field
     }
 
@@ -59,37 +63,40 @@ public class BlueLStartAuto extends StealthOpMode {
     public void whileWaitingToStart() {
         CommandScheduler.getInstance().run();
     }
+
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
         drive.setPoseEstimate(11, 60, Math.toRadians(270));
         //guesses center for now because the angle and camera don't work rn
-        switch (ConeLocation){
+        ConeLocation = "center";
+        switch (ConeLocation) {
             case "left":
                 return new SequentialCommandGroup(
-                        new InstantCommand(()-> preload.close()),
+                        new InstantCommand(() -> preload.close()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelleft),
-                        new InstantCommand(()-> preload.open()),
+                        new InstantCommand(() -> preload.open()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory5)
 
                 );
             case "right":
                 return new SequentialCommandGroup(
-                        new InstantCommand(()-> preload.close()),
+                        new InstantCommand(() -> preload.close()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelright),
-                        new InstantCommand(()-> preload.open()),
+                        new InstantCommand(() -> preload.open()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory4)
 
-                        );
+                );
 
             default:
                 return new SequentialCommandGroup(
 
-                        new InstantCommand(()-> preload.close()),
-                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelcenter),
-                        new InstantCommand(()-> preload.open()),
-                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory2),
-                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory3)
+                        new MoveElevatorPercentage(elevator, 0.5)
+                        //new InstantCommand(()-> preload.close()),
+                        //new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelcenter),
+                        //new InstantCommand(()-> preload.open()),
+                        //new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory2),
+                        //new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory3)
                 );
 
         }

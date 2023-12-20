@@ -21,7 +21,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final DcMotorEx elevatorMotor;
 
     public static int UPPER_LIMIT_TICKS = 3335;
-    public static int MAX_VELOCITY_TICKS_PER_SEC = 268;
+    public static int MAX_VELOCITY_TICKS_PER_SEC = 2680;
     public static double RESET_POWER = 0.20;
     public static double RESET_STALL_TIME_SEC = 0.050; // 50ms
 
@@ -81,7 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void setPower(double power){
-//        elevatorMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        elevatorMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         elevatorMotor.setPower(power);
     }
 
@@ -140,6 +140,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * Ask the elevator to go to the position we've already set.
      */
     public void goToPosition() {
+        elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevatorMotor.setTargetPosition(targetTicks);
         elevatorMotor.setVelocity(MAX_VELOCITY_TICKS_PER_SEC);
     }
