@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
 import org.firstinspires.ftc.teamcode.commands.EjectCommand;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
 import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
+import org.firstinspires.ftc.teamcode.commands.OpenLeverCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.StrafeForInches;
 import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
@@ -94,13 +95,17 @@ public class BlueLStartAuto extends StealthOpMode {
                 return new SequentialCommandGroup(
 
                         new InstantCommand(()-> preload.close()),
+                        new InstantCommand(()-> lever.close()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelcenter),
                         new InstantCommand(()-> preload.open()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory2),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory3),
                         new MoveElevatorPercentage(elevator, 0.5),
                         new InstantCommand(()-> arm.intakePosition()),
-                        new InstantCommand(()-> lever.open())
+                        new WaitCommand(7000),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory6),
+                        new OpenLeverCommand(lever),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory7)
                 );
 
         }

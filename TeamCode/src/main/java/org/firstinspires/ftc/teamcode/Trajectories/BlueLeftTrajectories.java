@@ -17,7 +17,7 @@ public class BlueLeftTrajectories {
             .back(4)
             .build();
     public static Trajectory trajectory3 = TrajectoryBuilder.buildTrajectory(trajectory2.end())
-            .lineToSplineHeading(new Pose2d(44, 35, Math.toRadians(180)))
+            .lineToLinearHeading(new Pose2d(44, 35, Math.toRadians(180)))
             .build();
     public static Trajectory scorepixelleft = TrajectoryBuilder.buildTrajectory(startingPose)
             .splineTo(new Vector2d(31, 33), Math.toRadians(182))
@@ -30,5 +30,11 @@ public class BlueLeftTrajectories {
             .build();
     public static Trajectory trajectory5 = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
             .lineToSplineHeading(new Pose2d(52, 35, Math.toRadians(-180)))
+            .build();
+    public static Trajectory trajectory6 = TrajectoryBuilder.buildTrajectory(trajectory3.end())
+            .back(7)
+            .build();
+    public static Trajectory trajectory7 = TrajectoryBuilder.buildTrajectory(trajectory6.end())
+            .forward(4)
             .build();
 }
