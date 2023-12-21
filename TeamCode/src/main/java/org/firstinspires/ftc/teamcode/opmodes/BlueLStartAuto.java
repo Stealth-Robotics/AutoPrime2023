@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -27,6 +28,7 @@ import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.PreloadHolder;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 import org.stealthrobotics.library.Alliance;
+import org.stealthrobotics.library.commands.WaitBeforeCommand;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
 
 @Autonomous(name = "BlueLeftSideStart", preselectTeleOp = "BLUE | Tele-Op")
@@ -91,12 +93,14 @@ public class BlueLStartAuto extends StealthOpMode {
             default:
                 return new SequentialCommandGroup(
 
-                        new MoveElevatorPercentage(elevator, 0.5)
-                        //new InstantCommand(()-> preload.close()),
-                        //new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelcenter),
-                        //new InstantCommand(()-> preload.open()),
-                        //new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory2),
-                        //new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory3)
+                        new InstantCommand(()-> preload.close()),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelcenter),
+                        new InstantCommand(()-> preload.open()),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory2),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory3),
+                        new MoveElevatorPercentage(elevator, 0.5),
+                        new InstantCommand(()-> arm.intakePosition()),
+                        new InstantCommand(()-> lever.open())
                 );
 
         }
