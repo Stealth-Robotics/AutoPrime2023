@@ -14,10 +14,10 @@ public class BlueLeftTrajectories {
             .forward(29)
             .build();
     public static Trajectory trajectory2 = TrajectoryBuilder.buildTrajectory(scorepixelcenter.end())
-            .back(3)
+            .back(4)
             .build();
     public static Trajectory trajectory3 = TrajectoryBuilder.buildTrajectory(trajectory2.end())
-            .lineToSplineHeading(new Pose2d(52, 35, Math.toRadians(192)))
+            .lineToSplineHeading(new Pose2d(44, 35, Math.toRadians(180)))
             .build();
     public static Trajectory scorepixelleft = TrajectoryBuilder.buildTrajectory(startingPose)
             .splineTo(new Vector2d(31, 33), Math.toRadians(182))
