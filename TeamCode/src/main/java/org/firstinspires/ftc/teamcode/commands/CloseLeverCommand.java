@@ -6,10 +6,10 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
 
-public class OpenLeverCommand extends SequentialCommandGroup {
-    public OpenLeverCommand(LeverSubsystem lever){
+public class CloseLeverCommand extends SequentialCommandGroup {
+    public CloseLeverCommand(LeverSubsystem lever){
         addCommands(
-                new InstantCommand(() -> lever.open()),
+                new InstantCommand(() -> lever.close()),
                 new WaitCommand(1000)
         );
     }

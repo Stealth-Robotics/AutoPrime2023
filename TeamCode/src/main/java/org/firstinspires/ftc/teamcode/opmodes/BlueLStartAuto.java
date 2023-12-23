@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Trajectories.BlueLeftTrajectories;
 import org.firstinspires.ftc.teamcode.Trajectories.TrajectoryBuilder;
+import org.firstinspires.ftc.teamcode.commands.CloseLeverCommand;
 import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
 import org.firstinspires.ftc.teamcode.commands.EjectCommand;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
@@ -100,12 +101,18 @@ public class BlueLStartAuto extends StealthOpMode {
                         new InstantCommand(()-> preload.open()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory2),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory3),
-                        new MoveElevatorPercentage(elevator, 0.5),
+                        new MoveElevatorPercentage(elevator, 0.38),
                         new InstantCommand(()-> arm.intakePosition()),
-                        new WaitCommand(7000),
+                        new WaitCommand(3500),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory6),
                         new OpenLeverCommand(lever),
-                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory7)
+                        new MoveElevatorPercentage(elevator, 0.42),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory7),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.centerpark),
+                        new InstantCommand(()-> arm.scorePosition()),
+                        new WaitCommand(500),
+                        new CloseLeverCommand(lever),
+                        new ResetElevatorCommand(elevator)
                 );
 
         }
