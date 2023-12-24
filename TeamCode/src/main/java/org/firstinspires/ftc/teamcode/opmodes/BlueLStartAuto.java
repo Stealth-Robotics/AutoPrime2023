@@ -60,7 +60,6 @@ public class BlueLStartAuto extends StealthOpMode {
 
         schedule(new ResetElevatorCommand(elevator));
 
-        // tell the camera, we are starting on a specific side of the field
     }
 
     @Override
