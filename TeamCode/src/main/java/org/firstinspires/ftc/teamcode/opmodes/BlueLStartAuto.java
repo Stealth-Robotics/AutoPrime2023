@@ -72,29 +72,54 @@ public class BlueLStartAuto extends StealthOpMode {
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
         drive.setPoseEstimate(11, 60, Math.toRadians(270));
-        //guesses center for now because the angle and camera don't work rn
-        ConeLocation = "center";
+
         switch (ConeLocation) {
             case "left":
                 return new SequentialCommandGroup(
                         new InstantCommand(() -> preload.close()),
+                        new InstantCommand(()-> lever.close()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelleft),
                         new InstantCommand(() -> preload.open()),
-                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory5)
+                        new WaitCommand(200),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory10),
+                        new MoveElevatorPercentage(elevator, 0.38),
+                        new InstantCommand(()-> arm.intakePosition()),
+                        new WaitCommand(3500),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory11),
+                        new OpenLeverCommand(lever),
+                        new MoveElevatorPercentage(elevator, 0.42),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory12),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.leftpark),
+                        new InstantCommand(()-> arm.scorePosition()),
+                        new WaitCommand(500),
+                        new CloseLeverCommand(lever),
+                        new ResetElevatorCommand(elevator)
 
                 );
             case "right":
                 return new SequentialCommandGroup(
                         new InstantCommand(() -> preload.close()),
+                        new InstantCommand(()-> lever.close()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelright),
                         new InstantCommand(() -> preload.open()),
-                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory4)
-
-                );
+                        new WaitCommand(200),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory4),
+                        new MoveElevatorPercentage(elevator, 0.38),
+                        new InstantCommand(()-> arm.intakePosition()),
+                        new WaitCommand(3500),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory8),
+                        new OpenLeverCommand(lever),
+                        new MoveElevatorPercentage(elevator, 0.42),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.trajectory9),
+                        new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.rightpark),
+                        new InstantCommand(()-> arm.scorePosition()),
+                        new WaitCommand(500),
+                        new CloseLeverCommand(lever),
+                        new ResetElevatorCommand(elevator)
+                        );
 
             default:
                 return new SequentialCommandGroup(
-
                         new InstantCommand(()-> preload.close()),
                         new InstantCommand(()-> lever.close()),
                         new FollowTrajectory(mecanumDrive, BlueLeftTrajectories.scorepixelcenter),
