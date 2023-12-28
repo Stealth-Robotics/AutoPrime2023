@@ -69,7 +69,7 @@ public class RedRStartAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        drive.setPoseEstimate(11, -60, Math.toRadians(90));
+        drive.setPoseEstimate(15, -60, Math.toRadians(90));
 
         switch (ConeLocation) {
             case "left":
@@ -81,7 +81,7 @@ public class RedRStartAuto extends StealthOpMode {
                         new WaitCommand(200),
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.trajectory10),
                         new ParallelCommandGroup(
-                                new MoveElevatorPercentage(elevator, 0.39),
+                                new MoveElevatorPercentage(elevator, 0.4),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
                         new WaitCommand(1500),
@@ -91,7 +91,7 @@ public class RedRStartAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.trajectory12),
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.leftpark),
                         new InstantCommand(()-> arm.scorePosition()),
-                        new WaitCommand(200),
+                        new WaitCommand(1000),
                         new ResetElevatorCommand(elevator)
 
                 );
@@ -104,7 +104,7 @@ public class RedRStartAuto extends StealthOpMode {
                         new WaitCommand(200),
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.trajectory4),
                         new ParallelCommandGroup(
-                                new MoveElevatorPercentage(elevator, 0.39),
+                                new MoveElevatorPercentage(elevator, 0.4),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
                         new WaitCommand(1500),
@@ -114,7 +114,7 @@ public class RedRStartAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.trajectory9),
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.rightpark),
                         new InstantCommand(()-> arm.scorePosition()),
-                        new WaitCommand(200),
+                        new WaitCommand(1000),
                         new ResetElevatorCommand(elevator)
                 );
 
@@ -127,7 +127,7 @@ public class RedRStartAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.trajectory2),
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.trajectory3),
                         new ParallelCommandGroup(
-                                new MoveElevatorPercentage(elevator, 0.39),
+                                new MoveElevatorPercentage(elevator, 0.4),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
                         new WaitCommand(1500),
@@ -137,7 +137,7 @@ public class RedRStartAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.trajectory7),
                         new FollowTrajectory(mecanumDrive, RedRightTrajectories.centerpark),
                         new InstantCommand(()-> arm.scorePosition()),
-                        new WaitCommand(200),
+                        new WaitCommand(1000),
                         new ResetElevatorCommand(elevator)
                 );
 

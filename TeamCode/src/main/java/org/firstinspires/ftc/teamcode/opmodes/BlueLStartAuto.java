@@ -70,7 +70,7 @@ public class BlueLStartAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        drive.setPoseEstimate(11, 60, Math.toRadians(270));
+        drive.setPoseEstimate(13, 60, Math.toRadians(270));
 
         switch (ConeLocation) {
             case "left":

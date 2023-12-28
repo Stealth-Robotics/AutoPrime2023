@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 
 public class BlueLeftTrajectories {
-    public static Pose2d startingPose = new Pose2d(11,60,Math.toRadians(270));
+    public static Pose2d startingPose = new Pose2d(13,60,Math.toRadians(270));
 
     public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
             .forward(29)

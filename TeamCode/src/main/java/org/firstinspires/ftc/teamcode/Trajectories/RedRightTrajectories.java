@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 
 public class RedRightTrajectories {
-    public static Pose2d startingPose = new Pose2d(11, -60,Math.toRadians(90));
+    public static Pose2d startingPose = new Pose2d(15, -60,Math.toRadians(90));
 
     public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
             .forward(29,
@@ -19,7 +19,7 @@ public class RedRightTrajectories {
             .back(4)
             .build();
     public static Trajectory trajectory3 = TrajectoryBuilder.buildTrajectory(trajectory2.end())
-            .lineToLinearHeading(new Pose2d(44, -35, Math.toRadians(175)))
+            .lineToLinearHeading(new Pose2d(44, -34.6, Math.toRadians(175.5)))
             .build();
     public static Trajectory scorepixelleft = TrajectoryBuilder.buildTrajectory(startingPose)
             .splineTo(new Vector2d(30, 33), Math.toRadians(180),
@@ -38,13 +38,13 @@ public class RedRightTrajectories {
             .lineToSplineHeading(new Pose2d(52, 35, Math.toRadians(-180)))
             .build();
     public static Trajectory trajectory6 = TrajectoryBuilder.buildTrajectory(trajectory3.end())
-            .back(9)
+            .back(10)
             .build();
     public static Trajectory trajectory7 = TrajectoryBuilder.buildTrajectory(trajectory6.end())
             .forward(5)
             .build();
     public static Trajectory centerpark = TrajectoryBuilder.buildTrajectory(trajectory7.end())
-            .splineTo(new Vector2d(59, -58.5), Math.toRadians(359))
+            .splineTo(new Vector2d(59, -58.5), Math.toRadians(0))
             .build();
     public static Trajectory trajectory8 = TrajectoryBuilder.buildTrajectory(trajectory4.end())
             .back(7)
