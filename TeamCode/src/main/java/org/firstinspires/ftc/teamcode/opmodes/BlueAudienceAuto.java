@@ -3,11 +3,16 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Trajectories.BlueAudience;
+import org.firstinspires.ftc.teamcode.commands.CloseLeverCommand;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
+import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
+import org.firstinspires.ftc.teamcode.commands.OpenLeverCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.commands.subsystems.AirplaneSubsystem;
@@ -56,17 +61,25 @@ public class BlueAudienceAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        drive.setPoseEstimate(-38.5, 61, Math.toRadians(270));
+        drive.setPoseEstimate(-39, 61, Math.toRadians(270));
 
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
-
+                        new InstantCommand(()-> preload.close()),
+                        new InstantCommand(()-> lever.close()),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.scorepixelleft),
+                        new InstantCommand(()-> preload.open()),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.leftbackup)
 
                 );
             case "right":
                 return new SequentialCommandGroup(
-
+                        new InstantCommand(()-> preload.close()),
+                        new InstantCommand(()-> lever.close()),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.scorepixelright),
+                        new InstantCommand(()-> preload.open()),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.rightbackup)
 
                 );
 
@@ -76,23 +89,7 @@ public class BlueAudienceAuto extends StealthOpMode {
                         new InstantCommand(()-> lever.close()),
                         new FollowTrajectory(mecanumDrive, BlueAudience.scorepixelcenter),
                         new InstantCommand(()-> preload.open()),
-                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory2),
-                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3),
-                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3part2),
-                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3part3),
-                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3part4)
-//                        new MoveElevatorPercentage(elevator, 0.38),
-//                        new InstantCommand(()-> arm.intakePosition()),
-//                        new WaitCommand(3500),
-//                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.trajectory6),
-//                        new OpenLeverCommand(lever),
-//                        new MoveElevatorPercentage(elevator, 0.42),
-//                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.trajectory7),
-//                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.centerpark),
-//                        new InstantCommand(()-> arm.scorePosition()),
-//                        new WaitCommand(500),
-//                        new CloseLeverCommand(lever),
-//                        new ResetElevatorCommand(elevator)
+                        new FollowTrajectory(mecanumDrive, BlueAudience.centerbackup)
                 );
 
         }

@@ -8,41 +8,47 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
+import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
 import org.firstinspires.ftc.teamcode.commands.subsystems.AirplaneSubsystem;
 import org.firstinspires.ftc.teamcode.commands.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.commands.subsystems.CameraSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.commands.subsystems.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.commands.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.commands.subsystems.LeverSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.PreloadHolder;
 import org.firstinspires.ftc.teamcode.commands.subsystems.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 import org.stealthrobotics.library.Alliance;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
 
 @Autonomous(name = "RedAudienceAuto", preselectTeleOp = "RED | Tele-Op")
 public class RedAudienceAuto extends StealthOpMode {
 
+    SampleMecanumDrive mecanumDrive;
     ElevatorSubsystem elevator;
-
-    SimpleMecanumDriveSubsystem drive;
-
     CameraSubsystem camera;
     LeverSubsystem lever;
     ArmSubsystem arm;
     IntakeSubsystem intake;
     AirplaneSubsystem airplane;
+    PreloadHolder preload;
+    DriveSubsystem drive;
 
     public void initialize() {
-        drive = new SimpleMecanumDriveSubsystem(hardwareMap);
+        mecanumDrive = new SampleMecanumDrive(hardwareMap);
+        drive = new DriveSubsystem(mecanumDrive, hardwareMap);
         elevator = new ElevatorSubsystem(hardwareMap);
-        camera = new CameraSubsystem(hardwareMap, Alliance.RED);
+        camera = new CameraSubsystem(hardwareMap, Alliance.BLUE);
         arm = new ArmSubsystem(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
         lever = new LeverSubsystem(hardwareMap);
         airplane = new AirplaneSubsystem(hardwareMap);
-        register(drive, elevator, camera, lever, intake, arm, airplane);
+        preload = new PreloadHolder(hardwareMap);
+        register(drive, elevator, camera, lever, intake, arm, airplane, preload);
 
-        // tell the camera, we are starting on a specific side of the field
+        schedule(new ResetElevatorCommand(elevator));
     }
 
     public void whileWaitingToStart() {
@@ -57,36 +63,18 @@ public class RedAudienceAuto extends StealthOpMode {
         switch (ConeLocation){
             case "left":
                 return new SequentialCommandGroup(
-                        new DriveForwardInchesCommand(drive,27),
-                        new DriveForwardInchesCommand(drive,-2),
-                        new TurnToDegreesCommand(drive, -98),
-                        new WaitCommand(500),
-                        new InstantCommand(()-> intake.SetIntakePower(0.65)),
-                        new WaitCommand(1800),
-                        new InstantCommand(()-> intake.SetIntakePower(0))
+
 
                 );
             case "right":
                 return new SequentialCommandGroup(
-                        new DriveForwardInchesCommand(drive,27),
-                        new DriveForwardInchesCommand(drive,-2),
-                        new TurnToDegreesCommand(drive, 98),
-                        new WaitCommand(500),
-                        new InstantCommand(()-> intake.SetIntakePower(0.65)),
-                        new WaitCommand(1800),
-                        new InstantCommand(()-> intake.SetIntakePower(0))
+
 
                 );
 
             default:
                 return new SequentialCommandGroup(
-                        new DriveForwardInchesCommand(drive,29),
-                        new DriveForwardInchesCommand(drive,-6),
-                        new DriveForwardInchesCommand(drive,4),
-                        new WaitCommand(500),
-                        new InstantCommand(()-> intake.SetIntakePower(0.65)),
-                        new WaitCommand(1800),
-                        new InstantCommand(()-> intake.SetIntakePower(0))
+
                 );
 
         }
