@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.pipelines;
+package org.firstinspires.ftc.teamcode.commands.subsystems.pipelines;
 
 import android.graphics.Canvas;
 
@@ -24,13 +24,13 @@ public class PropProcessor implements VisionProcessor {
     //TODO: tune these values
 
     static final Point LeftPoint1 = new Point(0,160);
-    static final Point LeftPoint2 = new Point(30,270);
+    static final Point LeftPoint2 = new Point(50,270);
     static final Rect LEFT_RECTANGLE = new Rect(
             LeftPoint1,
             LeftPoint2
     );
     static final Point CenterPoint1 = new Point(200,160);
-    static final Point CenterPoint2 = new Point(290,250);
+    static final Point CenterPoint2 = new Point(390,250);
     static final Rect CENTER_RECT = new Rect(
             CenterPoint1,
             CenterPoint2

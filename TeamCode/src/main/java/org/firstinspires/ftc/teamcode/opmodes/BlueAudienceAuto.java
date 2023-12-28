@@ -4,37 +4,25 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.checkerframework.checker.units.qual.A;
-import org.firstinspires.ftc.teamcode.Trajectories.BlueLeftTrajectories;
-import org.firstinspires.ftc.teamcode.Trajectories.BlueRightTrajectories;
-import org.firstinspires.ftc.teamcode.commands.CloseLeverCommand;
-import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
-import org.firstinspires.ftc.teamcode.commands.EjectCommand;
+import org.firstinspires.ftc.teamcode.Trajectories.BlueAudience;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
-import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
-import org.firstinspires.ftc.teamcode.commands.OpenLeverCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
-import org.firstinspires.ftc.teamcode.commands.StrafeForInches;
-import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.PreloadHolder;
-import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.AirplaneSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.CameraSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.ElevatorSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.LeverSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.PreloadHolder;
 import org.stealthrobotics.library.Alliance;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
 
-@Autonomous(name = "BlueRightSideStart", preselectTeleOp = "BLUE | Tele-Op")
-public class BlueRStartAuto extends StealthOpMode {
+@Autonomous(name = "BlueAudienceAuto", preselectTeleOp = "BLUE | Tele-Op")
+public class BlueAudienceAuto extends StealthOpMode {
 
     SampleMecanumDrive mecanumDrive;
     ElevatorSubsystem elevator;
@@ -68,7 +56,7 @@ public class BlueRStartAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        drive.setPoseEstimate(-35, 61, Math.toRadians(270));
+        drive.setPoseEstimate(-38.5, 61, Math.toRadians(270));
 
         switch (ConeLocation){
             case "left":
@@ -86,13 +74,13 @@ public class BlueRStartAuto extends StealthOpMode {
                 return new SequentialCommandGroup(
                         new InstantCommand(()-> preload.close()),
                         new InstantCommand(()-> lever.close()),
-                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.scorepixelcenter),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.scorepixelcenter),
                         new InstantCommand(()-> preload.open()),
-                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.trajectory2),
-                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.trajectory3),
-                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.trajectory3part2),
-                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.trajectory3part3),
-                        new FollowTrajectory(mecanumDrive, BlueRightTrajectories.trajectory3part4)
+                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory2),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3part2),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3part3),
+                        new FollowTrajectory(mecanumDrive, BlueAudience.trajectory3part4)
 //                        new MoveElevatorPercentage(elevator, 0.38),
 //                        new InstantCommand(()-> arm.intakePosition()),
 //                        new WaitCommand(3500),

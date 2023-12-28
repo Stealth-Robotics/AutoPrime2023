@@ -7,25 +7,20 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.Trajectories.RedLeftTrajectories;
 import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
-import org.firstinspires.ftc.teamcode.commands.EjectCommand;
-import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
 import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.AirplaneSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.CameraSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.ElevatorSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.LeverSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.SimpleMecanumDriveSubsystem;
 import org.stealthrobotics.library.Alliance;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
 
-@Autonomous(name = "RedLeftSideStart", preselectTeleOp = "RED | Tele-Op")
-public class RedLStartAuto extends StealthOpMode {
+@Autonomous(name = "RedAudienceAuto", preselectTeleOp = "RED | Tele-Op")
+public class RedAudienceAuto extends StealthOpMode {
 
     ElevatorSubsystem elevator;
 

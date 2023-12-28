@@ -7,20 +7,22 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 
-public class BlueLeftTrajectories {
-    public static Pose2d startingPose = new Pose2d(13,60,Math.toRadians(270));
+public class BlueBackStage {
+    public static Pose2d startingPose = new Pose2d(9,60,Math.toRadians(270));
 
     public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
-            .forward(29)
+            .forward(29,
+                    SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(10))
             .build();
     public static Trajectory trajectory2 = TrajectoryBuilder.buildTrajectory(scorepixelcenter.end())
             .back(4)
             .build();
     public static Trajectory trajectory3 = TrajectoryBuilder.buildTrajectory(trajectory2.end())
-            .lineToLinearHeading(new Pose2d(44, 33, Math.toRadians(184)))
+            .lineToLinearHeading(new Pose2d(44, 34, Math.toRadians(185)))
             .build();
     public static Trajectory scorepixelleft = TrajectoryBuilder.buildTrajectory(startingPose)
-            .splineTo(new Vector2d(30, 33), Math.toRadians(182),
+            .splineTo(new Vector2d(31, 33), Math.toRadians(182),
                     SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(10))
             .build();
@@ -42,7 +44,7 @@ public class BlueLeftTrajectories {
             .forward(5)
             .build();
     public static Trajectory centerpark = TrajectoryBuilder.buildTrajectory(trajectory7.end())
-            .splineTo(new Vector2d(59, 60), Math.toRadians(6))
+            .splineTo(new Vector2d(59, 60), Math.toRadians(5))
             .build();
     public static Trajectory trajectory8 = TrajectoryBuilder.buildTrajectory(trajectory4.end())
             .back(7)

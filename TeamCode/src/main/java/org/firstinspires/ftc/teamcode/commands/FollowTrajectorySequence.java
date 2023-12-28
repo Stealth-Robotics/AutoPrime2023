@@ -2,12 +2,10 @@ package org.firstinspires.ftc.teamcode.commands;
 
 import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.commands.subsystems.DriveSubsystem;
 
 /**
  * Spin a wheel forward forever, until the command is cancelled.
