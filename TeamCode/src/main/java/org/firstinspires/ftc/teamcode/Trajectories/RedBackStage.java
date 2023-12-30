@@ -29,7 +29,7 @@ public class RedBackStage {
                     SampleMecanumDrive.getAccelerationConstraint(16))
             .build();
     public static Trajectory scorepixelright = TrajectoryBuilder.buildTrajectory(startingPose)
-            .splineTo(new Vector2d(8, 30), Math.toRadians(180),
+            .splineTo(new Vector2d(13, -25), Math.toRadians(0),
                     SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(10))
             .build();
@@ -61,6 +61,9 @@ public class RedBackStage {
             .build();
     public static Trajectory rightpark = TrajectoryBuilder.buildTrajectory(trajectory9.end())
             .splineTo(new Vector2d(59, 60), Math.toRadians(357))
+            .build();
+    public static Trajectory rightpark2 = TrajectoryBuilder.buildTrajectory(rightpark.end())
+            .forward(10)
             .build();
     public static Trajectory trajectory10 = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
             .lineToLinearHeading(new Pose2d(44, -28, Math.toRadians(174)))

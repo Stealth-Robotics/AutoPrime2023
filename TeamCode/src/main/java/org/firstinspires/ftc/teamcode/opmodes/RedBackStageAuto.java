@@ -103,7 +103,7 @@ public class RedBackStageAuto extends StealthOpMode {
                         new WaitCommand(200),
                         new FollowTrajectory(mecanumDrive, RedBackStage.trajectory4),
                         new ParallelCommandGroup(
-                                new MoveElevatorPercentage(elevator, 0.4),
+                                new MoveElevatorPercentage(elevator, 0.42),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
                         new WaitCommand(1500),
@@ -111,12 +111,18 @@ public class RedBackStageAuto extends StealthOpMode {
                         new InstantCommand(()-> arm.specialPosition()),
                         new WaitCommand(500),
                         new OpenLeverCommand(lever),
-                        new MoveElevatorPercentage(elevator, 0.42),
-                        new FollowTrajectory(mecanumDrive, RedBackStage.trajectory9),
-                        new FollowTrajectory(mecanumDrive, RedBackStage.rightpark),
-                        new InstantCommand(()-> arm.scorePosition()),
-                        new WaitCommand(1000),
-                        new ResetElevatorCommand(elevator)
+                        new MoveElevatorPercentage(elevator, 0.44),
+                        new ParallelCommandGroup(
+                                new SequentialCommandGroup(
+                                        new FollowTrajectory(mecanumDrive, RedBackStage.rightpark),
+                                        new FollowTrajectory(mecanumDrive, RedBackStage.rightpark2)
+                                ),
+                                new SequentialCommandGroup(
+                                        new InstantCommand(()-> arm.scorePosition()),
+                                        new WaitCommand(800),
+                                        new ResetElevatorCommand(elevator)
+                                )
+                        )
                 );
 
             default:
