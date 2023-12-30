@@ -17,13 +17,12 @@ public class MeepMeepTesting {
                 .setDimensions(16.5, 17.5)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(15, -61, Math.toRadians(90)))
-                                .forward(30)
-                                .back(4)
-                                .lineToLinearHeading(new Pose2d(44, -35.4, Math.toRadians(180)))
+                                .splineTo(new Vector2d(10, -25), Math.toRadians(180))
+                                .lineToLinearHeading(new Pose2d(44, -29, Math.toRadians(174)))
                                 .back(12)
                                 .forward(6)
-                                .splineToConstantHeading(new Vector2d(55, -58.5), Math.toRadians(0))
-                                .back(4)
+                                .splineToLinearHeading(new Pose2d(50, -59, Math.toRadians(357)), Math.toRadians(0))
+                                .forward(10)
                                 .build()
                 );
 
