@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
-import org.firstinspires.ftc.teamcode.commands.subsystems.LeverSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
 
 public class OpenLeverCommand extends SequentialCommandGroup {
     public OpenLeverCommand(LeverSubsystem lever){

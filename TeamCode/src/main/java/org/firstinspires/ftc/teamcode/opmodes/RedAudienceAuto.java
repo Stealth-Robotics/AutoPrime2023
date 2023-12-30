@@ -2,23 +2,20 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.commands.DriveForwardInchesCommand;
+import org.firstinspires.ftc.teamcode.Trajectories.RedAudience;
+import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
-import org.firstinspires.ftc.teamcode.commands.TurnToDegreesCommand;
-import org.firstinspires.ftc.teamcode.commands.subsystems.AirplaneSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.CameraSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.ElevatorSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.LeverSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.PreloadHolder;
-import org.firstinspires.ftc.teamcode.commands.subsystems.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.PreloadHolder;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 import org.stealthrobotics.library.Alliance;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
@@ -40,7 +37,7 @@ public class RedAudienceAuto extends StealthOpMode {
         mecanumDrive = new SampleMecanumDrive(hardwareMap);
         drive = new DriveSubsystem(mecanumDrive, hardwareMap);
         elevator = new ElevatorSubsystem(hardwareMap);
-        camera = new CameraSubsystem(hardwareMap, Alliance.BLUE);
+        camera = new CameraSubsystem(hardwareMap, Alliance.RED);
         arm = new ArmSubsystem(hardwareMap);
         intake = new IntakeSubsystem(hardwareMap);
         lever = new LeverSubsystem(hardwareMap);
@@ -58,7 +55,8 @@ public class RedAudienceAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        //guesses center for now because the angle and camera don't work rn
+        ConeLocation = "center";
+        drive.setPoseEstimate(-38.5, -61, Math.toRadians(90));
 
         switch (ConeLocation){
             case "left":
@@ -74,8 +72,9 @@ public class RedAudienceAuto extends StealthOpMode {
 
             default:
                 return new SequentialCommandGroup(
-
-                );
+                        new FollowTrajectory(mecanumDrive, RedAudience.trajectory1),
+                        new FollowTrajectory(mecanumDrive, RedAudience.trajectory2)
+                        );
 
         }
     }

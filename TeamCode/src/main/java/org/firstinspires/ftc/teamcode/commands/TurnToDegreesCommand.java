@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.util.MathUtils;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.commands.subsystems.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 
 @Config
 public class TurnToDegreesCommand extends CommandBase {

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.commands.subsystems.ClimberSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ClimberSubsystem;
 
 import java.util.function.BooleanSupplier;
 

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.commands.subsystems.ElevatorSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 
 /**
  * Reset the elevator all the way down. Uses the limit switch to know when the hardware is down.

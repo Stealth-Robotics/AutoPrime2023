@@ -7,7 +7,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.util.MathUtils;
 
-import org.firstinspires.ftc.teamcode.commands.subsystems.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDriveSubsystem;
 
 @Config
 public class DriveForwardInchesCommand extends CommandBase {

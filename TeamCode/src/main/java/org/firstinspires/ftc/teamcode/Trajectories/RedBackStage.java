@@ -8,10 +8,10 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 
 public class RedBackStage {
-    public static Pose2d startingPose = new Pose2d(15, -60,Math.toRadians(90));
+    public static Pose2d startingPose = new Pose2d(15, -61,Math.toRadians(90));
 
     public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
-            .forward(29,
+            .forward(30,
                     SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(10))
             .build();
@@ -19,7 +19,7 @@ public class RedBackStage {
             .back(4)
             .build();
     public static Trajectory trajectory3 = TrajectoryBuilder.buildTrajectory(trajectory2.end())
-            .lineToLinearHeading(new Pose2d(44, -34.6, Math.toRadians(175.5)))
+            .lineToLinearHeading(new Pose2d(44, -35.4, Math.toRadians(180)))
             .build();
     public static Trajectory scorepixelleft = TrajectoryBuilder.buildTrajectory(startingPose)
             .splineTo(new Vector2d(30, 33), Math.toRadians(180),
@@ -38,13 +38,18 @@ public class RedBackStage {
             .lineToSplineHeading(new Pose2d(52, 35, Math.toRadians(-180)))
             .build();
     public static Trajectory trajectory6 = TrajectoryBuilder.buildTrajectory(trajectory3.end())
-            .back(10)
+            .back(12)
             .build();
     public static Trajectory trajectory7 = TrajectoryBuilder.buildTrajectory(trajectory6.end())
-            .forward(5)
+            .forward(6,
+                    SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(50))
             .build();
     public static Trajectory centerpark = TrajectoryBuilder.buildTrajectory(trajectory7.end())
-            .splineTo(new Vector2d(59, -58.5), Math.toRadians(0))
+            .splineToConstantHeading(new Vector2d(55, -58.5), Math.toRadians(0))
+            .build();
+    public static Trajectory centerpark2 = TrajectoryBuilder.buildTrajectory(centerpark.end())
+            .back(4)
             .build();
     public static Trajectory trajectory8 = TrajectoryBuilder.buildTrajectory(trajectory4.end())
             .back(7)
@@ -53,7 +58,7 @@ public class RedBackStage {
             .forward(5)
             .build();
     public static Trajectory rightpark = TrajectoryBuilder.buildTrajectory(trajectory9.end())
-            .splineTo(new Vector2d(59, 60), Math.toRadians(0))
+            .splineTo(new Vector2d(59, 60), Math.toRadians(357))
             .build();
     public static Trajectory trajectory10 = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
             .lineToLinearHeading(new Pose2d(46, 37.8, Math.toRadians(180)))
@@ -65,6 +70,6 @@ public class RedBackStage {
             .forward(5)
             .build();
     public static Trajectory leftpark = TrajectoryBuilder.buildTrajectory(trajectory12.end())
-            .splineTo(new Vector2d(59, 60), Math.toRadians(0))
+            .splineTo(new Vector2d(59, 60), Math.toRadians(357))
             .build();
 }

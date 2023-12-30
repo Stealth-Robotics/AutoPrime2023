@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commands.subsystems;
+package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.stealthrobotics.library.opmodes.StealthOpMode.telemetry;
 
@@ -19,6 +19,8 @@ public class ArmSubsystem extends SubsystemBase {
     public static double SCORE_POSITION = 0.5;
     public static double INTAKE_POSITION = 0.7;
 
+    public static double SPECIAL_POSITION = 0.66;
+
     private boolean up = false;
 
     public ArmSubsystem(HardwareMap hardwareMap) {
@@ -32,6 +34,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void intakePosition() {
         armServo.setPosition(INTAKE_POSITION);
+        up = false;
+    }
+
+    public void specialPosition() {
+        armServo.setPosition(SPECIAL_POSITION);
         up = false;
     }
 

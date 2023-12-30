@@ -5,7 +5,7 @@ import androidx.core.math.MathUtils;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.commands.subsystems.ElevatorSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 
 import java.util.function.DoubleSupplier;
 

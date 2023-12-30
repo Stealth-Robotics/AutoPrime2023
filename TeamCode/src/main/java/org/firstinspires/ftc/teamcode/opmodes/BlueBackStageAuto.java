@@ -9,20 +9,19 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Trajectories.BlueBackStage;
-import org.firstinspires.ftc.teamcode.commands.CloseLeverCommand;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
 import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
 import org.firstinspires.ftc.teamcode.commands.OpenLeverCommand;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.commands.subsystems.AirplaneSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.CameraSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.LeverSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.ElevatorSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.commands.subsystems.PreloadHolder;
+import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.LeverSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.PreloadHolder;
 import org.stealthrobotics.library.Alliance;
 import org.stealthrobotics.library.opmodes.StealthOpMode;
 
@@ -80,6 +79,8 @@ public class BlueBackStageAuto extends StealthOpMode {
                         ),
                         new WaitCommand(3500),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory11),
+                        new InstantCommand(()-> arm.specialPosition()),
+                        new WaitCommand(500),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory12),
@@ -103,6 +104,8 @@ public class BlueBackStageAuto extends StealthOpMode {
                         ),
                         new WaitCommand(3500),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory8),
+                        new InstantCommand(()-> arm.specialPosition()),
+                        new WaitCommand(500),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory9),
@@ -126,6 +129,8 @@ public class BlueBackStageAuto extends StealthOpMode {
                         ),
                         new WaitCommand(3500),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory6),
+                        new InstantCommand(()-> arm.specialPosition()),
+                        new WaitCommand(500),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory7),
