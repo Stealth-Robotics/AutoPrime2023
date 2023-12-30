@@ -82,6 +82,7 @@ public class RedBackStageAuto extends StealthOpMode {
                         new WaitCommand(500),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.44),
+                        new FollowTrajectory(mecanumDrive, RedBackStage.trajectory12),
                         new ParallelCommandGroup(
                                 new SequentialCommandGroup(
                                         new FollowTrajectory(mecanumDrive, RedBackStage.leftpark),
@@ -101,6 +102,7 @@ public class RedBackStageAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, RedBackStage.scorepixelright),
                         new InstantCommand(() -> preload.open()),
                         new WaitCommand(200),
+                        new FollowTrajectory(mecanumDrive, RedBackStage.trajectoryApples),
                         new FollowTrajectory(mecanumDrive, RedBackStage.trajectory4),
                         new ParallelCommandGroup(
                                 new MoveElevatorPercentage(elevator, 0.42),
@@ -112,6 +114,7 @@ public class RedBackStageAuto extends StealthOpMode {
                         new WaitCommand(500),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.44),
+                        new FollowTrajectory(mecanumDrive, RedBackStage.trajectory9),
                         new ParallelCommandGroup(
                                 new SequentialCommandGroup(
                                         new FollowTrajectory(mecanumDrive, RedBackStage.rightpark),
