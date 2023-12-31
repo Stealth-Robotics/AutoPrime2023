@@ -9,16 +9,10 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 
 public class BlueBackStage {
     public static Pose2d startingPose = new Pose2d(15,60,Math.toRadians(270));
-
-    public static Trajectory side = TrajectoryBuilder.buildTrajectory(startingPose)
-            .strafeRight(6,
-                    SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                    SampleMecanumDrive.getAccelerationConstraint(5))
-            .build();
-    public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(side.end())
-            .forward(30,
-                    SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                    SampleMecanumDrive.getAccelerationConstraint(15))
+    public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
+            .lineToLinearHeading(new Pose2d(10, 31, Math.toRadians(270)),
+                    SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(20))
             .build();
     public static Trajectory trajectory2 = TrajectoryBuilder.buildTrajectory(scorepixelcenter.end())
             .back(4,
