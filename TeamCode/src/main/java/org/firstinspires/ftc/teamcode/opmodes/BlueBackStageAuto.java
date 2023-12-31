@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Trajectories.BlueBackStage;
+import org.firstinspires.ftc.teamcode.Trajectories.RedBackStage;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
 import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
 import org.firstinspires.ftc.teamcode.commands.OpenLeverCommand;
@@ -62,7 +63,7 @@ public class BlueBackStageAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        drive.setPoseEstimate(9, 60, Math.toRadians(270));
+        drive.setPoseEstimate(15, 60, Math.toRadians(270));
 
         switch (ConeLocation) {
             case "left":
@@ -74,20 +75,26 @@ public class BlueBackStageAuto extends StealthOpMode {
                         new WaitCommand(200),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory10),
                         new ParallelCommandGroup(
-                                new MoveElevatorPercentage(elevator, 0.38),
+                                new MoveElevatorPercentage(elevator, 0.39),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
-                        new WaitCommand(3500),
+                        new WaitCommand(1500),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory11),
                         new InstantCommand(()-> arm.specialPosition()),
                         new WaitCommand(500),
                         new OpenLeverCommand(lever),
-                        new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory12),
-                        new FollowTrajectory(mecanumDrive, BlueBackStage.leftpark),
-                        new InstantCommand(()-> arm.scorePosition()),
-                        new WaitCommand(1000),
-                        new ResetElevatorCommand(elevator)
+                        new ParallelCommandGroup(
+                                new SequentialCommandGroup(
+                                        new FollowTrajectory(mecanumDrive, BlueBackStage.leftpark),
+                                        new FollowTrajectory(mecanumDrive, BlueBackStage.leftpark2)
+                                ),
+                                new SequentialCommandGroup(
+                                        new InstantCommand(()-> arm.scorePosition()),
+                                        new WaitCommand(800),
+                                        new ResetElevatorCommand(elevator)
+                                )
+                        )
 
                 );
             case "right":
@@ -99,20 +106,26 @@ public class BlueBackStageAuto extends StealthOpMode {
                         new WaitCommand(200),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory4),
                         new ParallelCommandGroup(
-                                new MoveElevatorPercentage(elevator, 0.38),
+                                new MoveElevatorPercentage(elevator, 0.39),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
-                        new WaitCommand(3500),
+                        new WaitCommand(1500),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory8),
                         new InstantCommand(()-> arm.specialPosition()),
                         new WaitCommand(500),
                         new OpenLeverCommand(lever),
-                        new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory9),
-                        new FollowTrajectory(mecanumDrive, BlueBackStage.rightpark),
-                        new InstantCommand(()-> arm.scorePosition()),
-                        new WaitCommand(1000),
-                        new ResetElevatorCommand(elevator)
+                        new ParallelCommandGroup(
+                                new SequentialCommandGroup(
+                                        new FollowTrajectory(mecanumDrive, BlueBackStage.rightpark),
+                                        new FollowTrajectory(mecanumDrive, BlueBackStage.rightpark2)
+                                ),
+                                new SequentialCommandGroup(
+                                        new InstantCommand(()-> arm.scorePosition()),
+                                        new WaitCommand(800),
+                                        new ResetElevatorCommand(elevator)
+                                )
+                        )
                         );
 
             default:
@@ -124,20 +137,26 @@ public class BlueBackStageAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory2),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory3),
                         new ParallelCommandGroup(
-                                new MoveElevatorPercentage(elevator, 0.38),
+                                new MoveElevatorPercentage(elevator, 0.39),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
-                        new WaitCommand(3500),
+                        new WaitCommand(1500),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory6),
                         new InstantCommand(()-> arm.specialPosition()),
                         new WaitCommand(500),
                         new OpenLeverCommand(lever),
-                        new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory7),
-                        new FollowTrajectory(mecanumDrive, BlueBackStage.centerpark),
-                        new InstantCommand(()-> arm.scorePosition()),
-                        new WaitCommand(1000),
-                        new ResetElevatorCommand(elevator)
+                        new ParallelCommandGroup(
+                                new SequentialCommandGroup(
+                                        new FollowTrajectory(mecanumDrive, BlueBackStage.centerpark),
+                                        new FollowTrajectory(mecanumDrive, BlueBackStage.centerpark2)
+                                ),
+                                new SequentialCommandGroup(
+                                        new InstantCommand(()-> arm.scorePosition()),
+                                        new WaitCommand(800),
+                                        new ResetElevatorCommand(elevator)
+                                )
+                        )
                 );
 
         }

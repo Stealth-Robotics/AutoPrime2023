@@ -24,19 +24,19 @@ public class PropProcessor implements VisionProcessor {
     //TODO: tune these values
 
     static final Point LeftPoint1 = new Point(0,160);
-    static final Point LeftPoint2 = new Point(50,270);
+    static final Point LeftPoint2 = new Point(150,270);
     static final Rect LEFT_RECTANGLE = new Rect(
             LeftPoint1,
             LeftPoint2
     );
     static final Point CenterPoint1 = new Point(200,160);
-    static final Point CenterPoint2 = new Point(390,250);
+    static final Point CenterPoint2 = new Point(350,270);
     static final Rect CENTER_RECT = new Rect(
             CenterPoint1,
             CenterPoint2
     );
-    static final Point RightPoint1 = new Point(450,180);
-    static final Point RightPoint2 = new Point(620,250);
+    static final Point RightPoint1 = new Point(450,160);
+    static final Point RightPoint2 = new Point(640,270);
     static final Rect RIGHT_RECTANGLE = new Rect(
             RightPoint1,
             RightPoint2
