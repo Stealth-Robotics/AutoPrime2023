@@ -132,6 +132,7 @@ public class BlueBackStageAuto extends StealthOpMode {
                 return new SequentialCommandGroup(
                         new InstantCommand(()-> preload.close()),
                         new InstantCommand(()-> lever.close()),
+                        new FollowTrajectory(mecanumDrive, BlueBackStage.side),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.scorepixelcenter),
                         new InstantCommand(()-> preload.open()),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory2),

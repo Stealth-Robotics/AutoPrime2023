@@ -56,7 +56,7 @@ public class BlueAudienceAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        drive.setPoseEstimate(-39, 61, Math.toRadians(270));
+        drive.setPoseEstimate(-32, 61, Math.toRadians(270));
 
         switch (ConeLocation){
             case "left":
@@ -85,6 +85,7 @@ public class BlueAudienceAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, BlueAudience.scorepixelcenter),
                         new InstantCommand(()-> preload.open()),
                         new FollowTrajectory(mecanumDrive, BlueAudience.centerbackup)
+
                 );
 
         }
