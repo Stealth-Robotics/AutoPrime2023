@@ -20,7 +20,7 @@ import org.stealthrobotics.library.math.filter.Debouncer;
 public class ElevatorSubsystem extends SubsystemBase {
     private final DcMotorEx elevatorMotor;
 
-    public static int UPPER_LIMIT_TICKS = 3335;
+    public static int UPPER_LIMIT_TICKS = 3100;
     public static int MAX_VELOCITY_TICKS_PER_SEC = 2680;
     public static double RESET_POWER = 0.20;
     public static double RESET_STALL_TIME_SEC = 0.050; // 50ms

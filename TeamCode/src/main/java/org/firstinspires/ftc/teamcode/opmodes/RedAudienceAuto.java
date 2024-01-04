@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.Trajectories.BlueAudience;
 import org.firstinspires.ftc.teamcode.Trajectories.RedAudience;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
@@ -55,27 +57,38 @@ public class RedAudienceAuto extends StealthOpMode {
     @Override
     public Command getAutoCommand() {
         String ConeLocation = camera.getConePos();
-        ConeLocation = "center";
         drive.setPoseEstimate(-38.5, -61, Math.toRadians(90));
 
-        switch (ConeLocation){
+        switch (ConeLocation) {
             case "left":
                 return new SequentialCommandGroup(
-
+                        new InstantCommand(() -> preload.close()),
+                        new InstantCommand(() -> lever.close()),
+                        new FollowTrajectory(mecanumDrive, RedAudience.scorepixelleft),
+                        new FollowTrajectory(mecanumDrive, RedAudience.leftforward),
+                        new InstantCommand(() -> preload.open()),
+                        new FollowTrajectory(mecanumDrive, RedAudience.leftbackup)
 
                 );
             case "right":
                 return new SequentialCommandGroup(
-
+                        new InstantCommand(() -> preload.close()),
+                        new InstantCommand(() -> lever.close()),
+                        new FollowTrajectory(mecanumDrive, RedAudience.scorepixelright),
+                        new InstantCommand(() -> preload.open()),
+                        new FollowTrajectory(mecanumDrive, RedAudience.rightbackup)
 
                 );
 
             default:
                 return new SequentialCommandGroup(
-                        new FollowTrajectory(mecanumDrive, RedAudience.trajectory1),
-                        new FollowTrajectory(mecanumDrive, RedAudience.trajectory2)
-                        );
+                        new InstantCommand(() -> preload.close()),
+                        new InstantCommand(() -> lever.close()),
+                        new FollowTrajectory(mecanumDrive, RedAudience.scorepixelcenter),
+                        new InstantCommand(() -> preload.open()),
+                        new FollowTrajectory(mecanumDrive, RedAudience.centerbackup)
 
+                );
         }
     }
 }

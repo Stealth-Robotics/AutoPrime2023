@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,6 +11,7 @@ import org.firstinspires.ftc.teamcode.commands.DefaultClimberCommand;
 import org.firstinspires.ftc.teamcode.commands.DefaultElevatorCommand;
 import org.firstinspires.ftc.teamcode.commands.DefaultMecanumDriveCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeDefaultCommand;
+import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
 import org.firstinspires.ftc.teamcode.commands.ResetElevatorCommand;
 import org.firstinspires.ftc.teamcode.subsystems.AirplaneSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
@@ -52,11 +55,11 @@ public abstract class TeleopFor1 extends StealthOpMode {
         elevator = new ElevatorSubsystem(hardwareMap);
         lever = new LeverSubsystem(hardwareMap);
         arm  = new ArmSubsystem(hardwareMap);
-        camera = new CameraSubsystem(hardwareMap, Alliance.RED);
         climber = new ClimberSubsystem(hardwareMap);
         airplane = new AirplaneSubsystem(hardwareMap);
 
-        register(drive, intake, elevator, lever, arm, camera, airplane, climber);
+        register(drive, intake, elevator, lever, arm, airplane, climber);
+        schedule(new ResetElevatorCommand(elevator));
 
         driveGamepad = new GamepadEx(gamepad1);
         mechGamepad = new GamepadEx(gamepad2);
@@ -97,6 +100,15 @@ public abstract class TeleopFor1 extends StealthOpMode {
         );
 
         // Setup all of your controllers' buttons and triggers here
+        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
+                new SequentialCommandGroup(
+//                        new InstantCommand(() -> elevator.),
+//                        new WaitCommand(500),
+//                        new InstantCommand(() -> arm.intakePosition())
+                )
+        );
+        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> drive.toggleFieldCentric()));
+
         driveGamepad.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ResetElevatorCommand(elevator));
         driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> drive.resetHeading()));
 

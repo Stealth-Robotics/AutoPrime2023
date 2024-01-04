@@ -52,11 +52,11 @@ public abstract class Teleop extends StealthOpMode {
         elevator = new ElevatorSubsystem(hardwareMap);
         lever = new LeverSubsystem(hardwareMap);
         arm  = new ArmSubsystem(hardwareMap);
-        camera = new CameraSubsystem(hardwareMap, Alliance.RED);
         climber = new ClimberSubsystem(hardwareMap);
         airplane = new AirplaneSubsystem(hardwareMap);
 
-        register(drive, intake, elevator, lever, arm, camera, airplane, climber);
+        register(drive, intake, elevator, lever, arm, airplane, climber);
+        schedule(new ResetElevatorCommand(elevator));
 
         driveGamepad = new GamepadEx(gamepad1);
         mechGamepad = new GamepadEx(gamepad2);
