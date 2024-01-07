@@ -86,8 +86,8 @@ public abstract class TeleopFor1 extends StealthOpMode {
         );
 
         elevator.setDefaultCommand(new DefaultElevatorCommand(elevator,
-                        () -> (driveGamepad.gamepad.left_trigger - driveGamepad.gamepad.right_trigger)
-
+                        () -> mechGamepad.gamepad.left_trigger,
+                        () -> mechGamepad.gamepad.right_trigger
                 )
         );
 
@@ -99,15 +99,11 @@ public abstract class TeleopFor1 extends StealthOpMode {
                 )
         );
 
-        // Setup all of your controllers' buttons and triggers here
-        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-                new SequentialCommandGroup(
-//                        new InstantCommand(() -> elevator.),
-//                        new WaitCommand(500),
-//                        new InstantCommand(() -> arm.intakePosition())
-                )
-        );
-        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> drive.toggleFieldCentric()));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.0)));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.6)));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.8)));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.3)));
+
 
         driveGamepad.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ResetElevatorCommand(elevator));
         driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> drive.resetHeading()));
