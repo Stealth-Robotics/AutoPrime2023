@@ -19,38 +19,30 @@ import java.util.function.DoubleSupplier;
 
 public class DefaultElevatorCommand extends CommandBase {
     final ElevatorSubsystem elevator;
-    final DoubleSupplier trigger;
+    final DoubleSupplier leftTrigger;
+    final DoubleSupplier rightTrigger;
     public static double manualESpeed = 0.01;
 
     public DefaultElevatorCommand(ElevatorSubsystem elevator,
-                                  DoubleSupplier trigger
+                                  DoubleSupplier leftTrigger,
+                                  DoubleSupplier rightTrigger
     ) {
         this.elevator = elevator;
-        this.trigger = trigger;
+        this.leftTrigger = leftTrigger;
+        this.rightTrigger = rightTrigger;
 
         addRequirements(elevator);
     }
 
+
     @Override
     public void execute() {
-        //elevator.goToPosition();
-        //double newPos = 0;
-        //double currentPos = elevator.getTargetLocation();
-        double power = trigger.getAsDouble();
-        if(elevator.getState() == ElevatorSubsystem.ElevatorState.ABOVE_MAXIMUM){
-            power = MathUtils.clamp(power, -1, 0);
-        }
-        else if(elevator.getState() == ElevatorSubsystem.ElevatorState.BELOW_MINIMUM){
-            power = MathUtils.clamp(power, 0, 1);
-        }
-        else {
-            power = MathUtils.clamp(power, -1, 1);
-        }
-        elevator.setPower(power);
-
-
-
-        //elevator.setTargetLocation(elevator.getTargetLocation());
+        elevator.goToPosition();
+        double currentPos = elevator.getTargetLocation();
+        double l = leftTrigger.getAsDouble();
+        double r = rightTrigger.getAsDouble();
+        double newPos = currentPos + (manualESpeed * l) - (manualESpeed * r);
+        elevator.setTargetLocation(newPos);
 
     }
 
