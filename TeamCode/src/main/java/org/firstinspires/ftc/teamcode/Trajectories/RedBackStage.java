@@ -11,7 +11,7 @@ public class RedBackStage {
     public static Pose2d startingPose = new Pose2d(15, -61,Math.toRadians(90));
 
     public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
-            .lineToLinearHeading(new Pose2d(13, -31, Math.toRadians(90)),
+            .forward(30,
                     SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(20))
             .build();
@@ -49,7 +49,7 @@ public class RedBackStage {
             .forward(6)
             .build();
     public static Trajectory centerpark = TrajectoryBuilder.buildTrajectory(trajectory7.end())
-            .splineToLinearHeading(new Pose2d(50, -57.5, Math.toRadians(357)), Math.toRadians(6))
+            .splineToLinearHeading(new Pose2d(50, -58, Math.toRadians(357)), Math.toRadians(6))
             .build();
     public static Trajectory centerpark2 = TrajectoryBuilder.buildTrajectory(centerpark.end())
             .forward(10)
@@ -61,7 +61,7 @@ public class RedBackStage {
             .forward(6)
             .build();
     public static Trajectory rightpark = TrajectoryBuilder.buildTrajectory(trajectory9.end())
-            .splineToLinearHeading(new Pose2d(50, -57.5, Math.toRadians(357)), Math.toRadians(6))
+            .splineToLinearHeading(new Pose2d(50, -58, Math.toRadians(357)), Math.toRadians(6))
             .build();
     public static Trajectory rightpark2 = TrajectoryBuilder.buildTrajectory(rightpark.end())
             .forward(10)
@@ -76,7 +76,7 @@ public class RedBackStage {
             .forward(6)
             .build();
     public static Trajectory leftpark = TrajectoryBuilder.buildTrajectory(trajectory12.end())
-            .splineToLinearHeading(new Pose2d(50, -57.5, Math.toRadians(357)), Math.toRadians(6))
+            .splineToLinearHeading(new Pose2d(50, -58, Math.toRadians(357)), Math.toRadians(6))
             .build();
     public static Trajectory leftpark2 = TrajectoryBuilder.buildTrajectory(leftpark.end())
             .forward(10)
