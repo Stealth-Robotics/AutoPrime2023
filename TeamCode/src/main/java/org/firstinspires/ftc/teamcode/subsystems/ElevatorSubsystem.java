@@ -21,7 +21,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final DcMotorEx elevatorMotor;
 
     public static int UPPER_LIMIT_TICKS = 3100;
-    public static int MAX_VELOCITY_TICKS_PER_SEC = 2680;
+    public static int MAX_VELOCITY_TICKS_PER_SEC = 2000;
     public static double RESET_POWER = 0.20;
     public static double RESET_STALL_TIME_SEC = 0.050; // 50ms
 
@@ -152,19 +152,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void periodic() {
         telemetry.addData("Elevator current ticks", elevatorMotor.getCurrentPosition());
         telemetry.addData("Elevator target ticks", targetTicks);
-        telemetry.addData("state: ", state.getValue());
        // telemetry.update();
-
-
-        if(elevatorMotor.getCurrentPosition() < 50){
-            state = ElevatorState.BELOW_MINIMUM;
-        }
-        else if(elevatorMotor.getCurrentPosition() > 3300){
-            state = ElevatorState.ABOVE_MAXIMUM;
-        }
-        else{
-            state = ElevatorState.IN_BOUNDS;
-        }
     }
 }
 

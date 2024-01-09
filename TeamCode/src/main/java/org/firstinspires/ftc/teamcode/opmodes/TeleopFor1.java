@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
+import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -86,8 +87,8 @@ public abstract class TeleopFor1 extends StealthOpMode {
         );
 
         elevator.setDefaultCommand(new DefaultElevatorCommand(elevator,
-                        () -> mechGamepad.gamepad.left_trigger,
-                        () -> mechGamepad.gamepad.right_trigger
+                        () -> driveGamepad.gamepad.left_trigger,
+                        () -> driveGamepad.gamepad.right_trigger
                 )
         );
 
@@ -99,10 +100,20 @@ public abstract class TeleopFor1 extends StealthOpMode {
                 )
         );
 
-        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.0)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.6)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.8)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.3)));
+        Button button = driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> elevator.setTargetLocation(0.0)),
+                        new InstantCommand(() -> arm.scorePosition())
+                        )
+        );
+        Button button1 = driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> elevator.setTargetLocation(0.9)),
+                        new InstantCommand(() -> arm.intakePosition())
+                )
+        );
+
+
 
 
         driveGamepad.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ResetElevatorCommand(elevator));
