@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -95,10 +97,19 @@ public abstract class Teleop extends StealthOpMode {
                         () -> driveGamepad.gamepad.left_bumper
                 )
         );
-        mechGamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.0)));
-        mechGamepad.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.6)));
-        mechGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.8)));
-        mechGamepad.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> elevator.setTargetLocation(0.3)));
+
+        Button button = mechGamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> elevator.setTargetLocation(0.0)),
+                        new InstantCommand(() -> arm.scorePosition())
+                )
+        );
+        Button button1 = mechGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> elevator.setTargetLocation(1)),
+                        new InstantCommand(() -> arm.intakePosition())
+                )
+        );
 
         mechGamepad.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ResetElevatorCommand(elevator));
         driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> drive.resetHeading()));

@@ -108,7 +108,7 @@ public abstract class TeleopFor1 extends StealthOpMode {
         );
         Button button1 = driveGamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
                 new SequentialCommandGroup(
-                        new InstantCommand(() -> elevator.setTargetLocation(0.9)),
+                        new InstantCommand(() -> elevator.setTargetLocation(1)),
                         new InstantCommand(() -> arm.intakePosition())
                 )
         );

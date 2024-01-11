@@ -21,7 +21,7 @@ public class DefaultElevatorCommand extends CommandBase {
     final ElevatorSubsystem elevator;
     final DoubleSupplier leftTrigger;
     final DoubleSupplier rightTrigger;
-    public static double manualESpeed = 0.01;
+    public static double manualESpeed = 0.02;
 
     public DefaultElevatorCommand(ElevatorSubsystem elevator,
                                   DoubleSupplier leftTrigger,
