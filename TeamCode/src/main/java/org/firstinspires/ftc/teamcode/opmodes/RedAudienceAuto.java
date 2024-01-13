@@ -65,7 +65,6 @@ public class RedAudienceAuto extends StealthOpMode {
                         new InstantCommand(() -> preload.close()),
                         new InstantCommand(() -> lever.close()),
                         new FollowTrajectory(mecanumDrive, RedAudience.scorepixelleft),
-                        new FollowTrajectory(mecanumDrive, RedAudience.leftforward),
                         new InstantCommand(() -> preload.open()),
                         new FollowTrajectory(mecanumDrive, RedAudience.leftbackup)
 
@@ -76,7 +75,7 @@ public class RedAudienceAuto extends StealthOpMode {
                         new InstantCommand(() -> lever.close()),
                         new FollowTrajectory(mecanumDrive, RedAudience.scorepixelright),
                         new InstantCommand(() -> preload.open()),
-                        new FollowTrajectory(mecanumDrive, RedAudience.rightbackup)
+                        new FollowTrajectory(mecanumDrive, RedAudience.rightforward)
 
                 );
 

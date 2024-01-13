@@ -11,7 +11,7 @@ public class RedAudience {
     public static Pose2d startingPose = new Pose2d(-38.5,-61,Math.toRadians(90));
 
     public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
-            .lineToLinearHeading(new Pose2d(-35, -31, Math.toRadians(90)),
+            .lineToLinearHeading(new Pose2d(-34, -31, Math.toRadians(90)),
                     SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(20))
             .build();
@@ -20,21 +20,18 @@ public class RedAudience {
             .back(4)
             .build();
     public static Trajectory scorepixelleft = TrajectoryBuilder.buildTrajectory(startingPose)
-            .lineToLinearHeading(new Pose2d(-36, -26, Math.toRadians(180)),
+            .lineToConstantHeading(new Vector2d(-40, -37),
                     SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(10))
-            .build();
-    public static Trajectory leftforward = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
-            .forward(4)
             .build();
 
     public static Trajectory scorepixelright = TrajectoryBuilder.buildTrajectory(startingPose)
-            .splineTo(new Vector2d(-36, -32), Math.toRadians(5),
+            .lineToLinearHeading(new Pose2d(-37, -33, Math.toRadians(0)),
                     SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(10))
             .build();
-    public static Trajectory rightbackup = TrajectoryBuilder.buildTrajectory(scorepixelright.end())
-            .back(4)
+    public static Trajectory rightforward = TrajectoryBuilder.buildTrajectory(scorepixelright.end())
+            .forward(4)
             .build();
     public static Trajectory leftbackup = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
             .back(4)
