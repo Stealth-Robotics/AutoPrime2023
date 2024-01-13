@@ -24,7 +24,6 @@ public class PreloadHolder extends SubsystemBase {
         holderServo.setPosition(CLOSE_POSITION);
         open = true;
     }
-
     public void close() {
         holderServo.setPosition(OPEN_POSITION);
         open = false;

@@ -24,7 +24,7 @@ public class PropProcessor implements VisionProcessor {
     //TODO: tune these values
 
     static final Point LeftPoint1 = new Point(0,160);
-    static final Point LeftPoint2 = new Point(150,270);
+    static final Point LeftPoint2 = new Point(150,290);
     static final Rect LEFT_RECTANGLE = new Rect(
             LeftPoint1,
             LeftPoint2
