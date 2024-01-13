@@ -9,72 +9,111 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 
 public class BlueBackStage {
     public static Pose2d startingPose = new Pose2d(15,60,Math.toRadians(270));
+
     public static Trajectory scorepixelcenter = TrajectoryBuilder.buildTrajectory(startingPose)
-            .lineToLinearHeading(new Pose2d(9.2, 31, Math.toRadians(270)),
-                    SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                    SampleMecanumDrive.getAccelerationConstraint(20))
-            .build();
-    public static Trajectory trajectory2 = TrajectoryBuilder.buildTrajectory(scorepixelcenter.end())
-            .back(4,
+            .lineToConstantHeading(new Vector2d(10, 31),
                     SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                     SampleMecanumDrive.getAccelerationConstraint(40))
             .build();
+    public static Trajectory trajectory2 = TrajectoryBuilder.buildTrajectory(scorepixelcenter.end())
+            .back(4,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
+            .build();
     public static Trajectory trajectory3 = TrajectoryBuilder.buildTrajectory(trajectory2.end())
-            .lineToLinearHeading(new Pose2d(44, 34, Math.toRadians(186)))
+            .lineToLinearHeading(new Pose2d(44, 36, Math.toRadians(187)),
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory scorepixelleft = TrajectoryBuilder.buildTrajectory(startingPose)
-            .splineTo(new Vector2d(31, 33), Math.toRadians(182),
-                    SampleMecanumDrive.getVelocityConstraint(16, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                    SampleMecanumDrive.getAccelerationConstraint(16))
+            .lineToLinearHeading(new Pose2d(18, 37, Math.toRadians(270)),
+                    SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(50))
             .build();
+    public static Trajectory scorepixelleft2 = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
+            .back(8,
+                    SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(50))
+            .build();
+
     public static Trajectory scorepixelright = TrajectoryBuilder.buildTrajectory(startingPose)
-            .splineTo(new Vector2d(8, 33), Math.toRadians(186),
-                    SampleMecanumDrive.getVelocityConstraint(16, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                    SampleMecanumDrive.getAccelerationConstraint(16))
+            .lineToLinearHeading(new Pose2d(15, 33, Math.toRadians(186)),
+                    SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(40))
             .build();
-    public static Trajectory trajectory4 = TrajectoryBuilder.buildTrajectory(scorepixelright.end())
-            .lineToLinearHeading(new Pose2d(46, 29, Math.toRadians(186)))
+    public static Trajectory scorepixelright2 = TrajectoryBuilder.buildTrajectory(scorepixelright.end())
+            .forward(5,
+                    SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(40))
             .build();
-    public static Trajectory trajectory5 = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
-            .lineToSplineHeading(new Pose2d(52, 35, Math.toRadians(-180)))
+    public static Trajectory trajectory4 = TrajectoryBuilder.buildTrajectory(scorepixelright2.end())
+            .lineToLinearHeading(new Pose2d(44, 34, Math.toRadians(182)),
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory trajectory6 = TrajectoryBuilder.buildTrajectory(trajectory3.end())
-            .back(12)
+            .back(9,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory trajectory7 = TrajectoryBuilder.buildTrajectory(trajectory6.end())
-            .forward(8)
+            .forward(6,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory centerpark = TrajectoryBuilder.buildTrajectory(trajectory7.end())
-            .splineToLinearHeading(new Pose2d(50, 59, Math.toRadians(3)), Math.toRadians(0))
+            .splineToLinearHeading(new Pose2d(50, 60, Math.toRadians(358)), Math.toRadians(356),
+                    SampleMecanumDrive.getVelocityConstraint(60, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(60))
             .build();
     public static Trajectory centerpark2 = TrajectoryBuilder.buildTrajectory(centerpark.end())
-            .forward(10)
+            .forward(10,
+                    SampleMecanumDrive.getVelocityConstraint(60, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(60))
             .build();
     public static Trajectory trajectory8 = TrajectoryBuilder.buildTrajectory(trajectory4.end())
-            .back(7)
+            .back(9,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory trajectory9 = TrajectoryBuilder.buildTrajectory(trajectory8.end())
-            .forward(8)
+            .forward(6,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory rightpark = TrajectoryBuilder.buildTrajectory(trajectory9.end())
-            .splineToLinearHeading(new Pose2d(50, 59, Math.toRadians(3)), Math.toRadians(0))
+            .splineToLinearHeading(new Pose2d(50, 60, Math.toRadians(358)), Math.toRadians(356),
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory rightpark2 = TrajectoryBuilder.buildTrajectory(rightpark.end())
-            .forward(10)
+            .forward(10,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
-    public static Trajectory trajectory10 = TrajectoryBuilder.buildTrajectory(scorepixelleft.end())
-            .lineToLinearHeading(new Pose2d(46, 38.5, Math.toRadians(180)))
+    public static Trajectory trajectory10 = TrajectoryBuilder.buildTrajectory(scorepixelleft2.end())
+            .lineToLinearHeading(new Pose2d(44, 44, Math.toRadians(180)),
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory trajectory11 = TrajectoryBuilder.buildTrajectory(trajectory10.end())
-            .back(7)
+            .back(9,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory trajectory12 = TrajectoryBuilder.buildTrajectory(trajectory11.end())
-            .forward(8)
+            .forward(6,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory leftpark = TrajectoryBuilder.buildTrajectory(trajectory12.end())
-            .splineToLinearHeading(new Pose2d(50, 59, Math.toRadians(3)), Math.toRadians(0))
+            .splineToLinearHeading(new Pose2d(50, 60, Math.toRadians(358)), Math.toRadians(356),
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
     public static Trajectory leftpark2 = TrajectoryBuilder.buildTrajectory(leftpark.end())
-            .forward(10)
+            .forward(10,
+                    SampleMecanumDrive.getVelocityConstraint(80, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                    SampleMecanumDrive.getAccelerationConstraint(80))
             .build();
 }

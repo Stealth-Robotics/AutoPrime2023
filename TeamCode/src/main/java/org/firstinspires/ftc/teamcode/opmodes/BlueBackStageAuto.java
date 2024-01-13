@@ -9,7 +9,7 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Trajectories.BlueBackStage;
-import org.firstinspires.ftc.teamcode.Trajectories.RedBackStage;
+import org.firstinspires.ftc.teamcode.Trajectories.BlueBackStage;
 import org.firstinspires.ftc.teamcode.commands.FollowTrajectory;
 import org.firstinspires.ftc.teamcode.commands.MoveElevatorPercentage;
 import org.firstinspires.ftc.teamcode.commands.OpenLeverCommand;
@@ -72,15 +72,16 @@ public class BlueBackStageAuto extends StealthOpMode {
                         new InstantCommand(()-> lever.close()),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.scorepixelleft),
                         new InstantCommand(() -> preload.open()),
-                        new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory10),
+                        new FollowTrajectory(mecanumDrive, BlueBackStage.scorepixelleft2),
                         new ParallelCommandGroup(
+                                new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory10),
                                 new MoveElevatorPercentage(elevator, 0.35),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
-                        new WaitCommand(1000),
+                        new WaitCommand(100),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory11),
                         new InstantCommand(()-> arm.specialPosition()),
-                        new WaitCommand(100),
+                        new WaitCommand(150),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory12),
@@ -95,23 +96,23 @@ public class BlueBackStageAuto extends StealthOpMode {
                                         new ResetElevatorCommand(elevator)
                                 )
                         )
-
                 );
             case "right":
                 return new SequentialCommandGroup(
                         new InstantCommand(() -> preload.close()),
                         new InstantCommand(()-> lever.close()),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.scorepixelright),
+                        new FollowTrajectory(mecanumDrive, BlueBackStage.scorepixelright2),
                         new InstantCommand(() -> preload.open()),
-                        new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory4),
                         new ParallelCommandGroup(
+                                new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory4),
                                 new MoveElevatorPercentage(elevator, 0.35),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
-                        new WaitCommand(1000),
+                        new WaitCommand(150),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory8),
                         new InstantCommand(()-> arm.specialPosition()),
-                        new WaitCommand(100),
+                        new WaitCommand(150),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory9),
@@ -126,7 +127,7 @@ public class BlueBackStageAuto extends StealthOpMode {
                                         new ResetElevatorCommand(elevator)
                                 )
                         )
-                        );
+                );
 
             default:
                 return new SequentialCommandGroup(
@@ -135,15 +136,15 @@ public class BlueBackStageAuto extends StealthOpMode {
                         new FollowTrajectory(mecanumDrive, BlueBackStage.scorepixelcenter),
                         new InstantCommand(()-> preload.open()),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory2),
-                        new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory3),
                         new ParallelCommandGroup(
+                                new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory3),
                                 new MoveElevatorPercentage(elevator, 0.35),
                                 new InstantCommand(()-> arm.intakePosition())
                         ),
-                        new WaitCommand(1000),
+                        new WaitCommand(100),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory6),
                         new InstantCommand(()-> arm.specialPosition()),
-                        new WaitCommand(100),
+                        new WaitCommand(150),
                         new OpenLeverCommand(lever),
                         new MoveElevatorPercentage(elevator, 0.42),
                         new FollowTrajectory(mecanumDrive, BlueBackStage.trajectory7),
@@ -159,7 +160,6 @@ public class BlueBackStageAuto extends StealthOpMode {
                                 )
                         )
                 );
-
         }
     }
 }
